@@ -12,5 +12,5 @@ You can run this project by using the following commands:
 # Install dependencies
 npm install
 # Run the app
-npm start
+npm run dev
 ```
