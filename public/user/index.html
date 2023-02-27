@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Usser Table Page</title>
+        <meta content="Usser Table Page" name="title"/>
+        <link rel="stylesheet" href="./style.css"/>
+    </head>
+    <body>
+    <div class="main-content">
+
+        <!--[Buuton add user]-->
+        <div class="add-user-button">
+            <p>Add user</p>
+            <span>
+                <svg class='line' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g transform='translate(2.850300, 2.150000)'><path d='M7.072,19.6583 C3.258,19.6583 1.15463195e-13,19.0813 1.15463195e-13,16.7713 C1.15463195e-13,14.4613 3.237,12.3603 7.072,12.3603 C10.886,12.3603 14.144,14.4413 14.144,16.7503 C14.144,19.0593 10.907,19.6583 7.072,19.6583 Z'></path><path d='M7.07200002,9.066 C9.57500002,9.066 11.605,7.036 11.605,4.533 C11.605,2.029 9.57500002,1.50990331e-14 7.07200002,1.50990331e-14 C4.56900002,1.50990331e-14 2.53897,2.029 2.53897,4.533 C2.53000002,7.027 4.54600002,9.057 7.04000002,9.066 L7.07200002,9.066 Z'></path><line x1='16.281' y1='5.9791' x2='16.281' y2='9.9891'></line><line x1='18.3273' y1='7.9839' x2='14.2373' y2='7.9839'></line></g></svg>
+            </span>
+        </div>
+
+        <!--[Bảng thông tin user ]-->
+
+        <div class="user-table">
+            <div>
+                <div style="height:50px;"></div>
+                <div class="title-table">
+                    <p>Thông tin thành viên</p>
+                </div>
+                <table id="table-member">
+            
+                   
+                </table>
+            </div>
+        </div>
+
+        <!--[Phân trang-]-->
+        <div class="page-split">
+            <div class="back-button" id="button_previousPage">
+                <svg class='line' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g transform='translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) translate(5.000000, 8.500000)'><path d='M14,0 C14,0 9.856,7 7,7 C4.145,7 0,0 0,0'></path></g>
+                </svg>
+            </div>
+            <div class="page-number" id="pageNumber">
+                <!--[Data-mẫu]-->
+                <p class="page select">1</p>
+                <!-- <p class="page">2</p>
+                <p class="page">3</p>
+                <p class="page">4</p> -->
+            </div>
+            <div class="next-button" id="button_nextPage">
+                <svg class='line' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g transform='translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) translate(5.000000, 8.500000)'><path d='M14,0 C14,0 9.856,7 7,7 C4.145,7 0,0 0,0'></path></g>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>From KIT Club with love</p>
+            <span>
+            <svg class='line' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g transform='translate(2.550170, 3.550158)'><path d='M0.371729633,8.89614246 C-0.701270367,5.54614246 0.553729633,1.38114246 4.07072963,0.249142462 C5.92072963,-0.347857538 8.20372963,0.150142462 9.50072963,1.93914246 C10.7237296,0.0841424625 13.0727296,-0.343857538 14.9207296,0.249142462 C18.4367296,1.38114246 19.6987296,5.54614246 18.6267296,8.89614246 C16.9567296,14.2061425 11.1297296,16.9721425 9.50072963,16.9721425 C7.87272963,16.9721425 2.09772963,14.2681425 0.371729633,8.89614246 Z'></path><path d='M13.23843,4.013842 C14.44543,4.137842 15.20043,5.094842 15.15543,6.435842'></path></g></svg>
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="overlay">
+        <div class="win-add-user">
+            <div class="close-icon">
+                <img src="svg-icon/x.svg" alt="">
+            </div>
+
+            <div class="form-add-user">
+                <h4>Nhập dữ liệu user</h4>
+                <div class="form">
+                    <label>Link avt</label>
+                    <input type="text" name="avt">
+                    <br/>
+                    <br/>
+                    <label>Mã sinh viên</label>
+                    <input type="text" name="msv">
+                    <br/>
+                    <br/>
+                    <label>Họ và tên</label>
+                    <input type="text" name="name">
+                    <br/>
+                    <br/>
+                    <label>Lớp</label>
+                    <input type="text" name="class">
+                    <br/>
+                    <br/>
+                    <label>Ban</label>
+                    <input type="text" name="ban">
+                    <br/>
+                    <br/>
+                    <label>Role</label>
+                    <input type="text" name="role">
+                    <br/>
+                    <br/>
+                    <button class="agree-btn">Thêm user</button>
+                    <button class="deny-btn">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay2">
+        <div class="popup-update-user"></div>
+    </div>
+
+    <div class="overlay3">
+        <div class="popup-update-member">
+            <div class="form-update">
+                <label for="">Link ảnh</label>
+                <input type="text" name="avtnew">
+                <br>
+                <br>
+                <label for="">MSV</label>
+                <input type="text" name="msvnew">
+                <br>
+                <br>
+                <label>Tên</label>
+                <input type="text" name="namenew">
+                <br>
+                <br>
+                <label for="">Lớp</label>
+                <input type="text" name="classnew">
+                <br>
+                <br>
+                <label for="">Ban</label>
+                <input type="text" name="bannew">
+                <br>
+                <br>
+                <label for="">Role</label>
+                <input type="text" name="rolenew">
+            </div>
+
+            <div class="ques-operation">
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="https://unpkg.com/micromustache@8.0.3/dist/micromustache.umd.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
