@@ -73,53 +73,11 @@ export default function Events() {
       startDay: "06/07/2002",
       endDay: "06/07/2002",
     },
-    // {
-    //   id: 11,
-    //   name: "Chào tân 8",
-    //   amount: 2,
-    //   startDay: "06/07/2002",
-    //   endDay: "06/07/2002",
-    // },
-    // {
-    //   id: 12,
-    //   name: "Chào tân 9",
-    //   amount: 2,
-    //   startDay: "06/07/2002",
-    //   endDay: "06/07/2002",
-    // },
-    // {
-    //   id: 13,
-    //   name: "Chào tân 8",
-    //   amount: 2,
-    //   startDay: "06/07/2002",
-    //   endDay: "06/07/2002",
-    // },
-    // {
-    //   id: 14,
-    //   name: "Chào tân 9",
-    //   amount: 2,
-    //   startDay: "06/07/2002",
-    //   endDay: "06/07/2002",
-    // },
-    // {
-    //   id: 15,
-    //   name: "Chào tân 8",
-    //   amount: 2,
-    //   startDay: "06/07/2002",
-    //   endDay: "06/07/2002",
-    // },
-    // {
-    //   id: 16,
-    //   name: "Chào tân 9",
-    //   amount: 2,
-    //   startDay: "06/07/2002",
-    //   endDay: "06/07/2002",
-    // },
   ];
 
   return (
     <div className="m-5">
-      <div className="mx-auto my-0 w-[1100px]">
+      <div className="mx-auto my-0 w-[68.75rem]">
         <button className="btn w-36 mb-4 mr-3 float-right">Thêm event</button>
         <div className="overflow-x-auto w-full mb-6">
           <table className="table table-compact w-full">

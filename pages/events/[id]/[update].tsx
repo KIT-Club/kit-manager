@@ -5,9 +5,9 @@ export default function UpdateEvent() {
   interface fakeData {
     id: number;
     avatar: string;
-    full_name: string;
+    fullname: string;
     username: string;
-    Ma_SV: string;
+    masv: string;
     role: string;
     class: string;
   }
@@ -18,8 +18,8 @@ export default function UpdateEvent() {
       avatar:
         "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
       username: "phanhuuviet",
-      full_name: "phan huu viet 1",
-      Ma_SV: "ct050455",
+      fullname: "phan huu viet 1",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -28,8 +28,8 @@ export default function UpdateEvent() {
       avatar:
         "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
       username: "phanhuuviet",
-      full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      fullname: "phan huu viet",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -38,8 +38,8 @@ export default function UpdateEvent() {
       avatar:
         "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
       username: "phanhuuviet",
-      full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      fullname: "phan huu viet",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -48,8 +48,8 @@ export default function UpdateEvent() {
       avatar:
         "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
       username: "phanhuuviet",
-      full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      fullname: "phan huu viet",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -58,8 +58,8 @@ export default function UpdateEvent() {
       avatar:
         "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
       username: "phanhuuviet",
-      full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      fullname: "phan huu viet",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -73,11 +73,6 @@ export default function UpdateEvent() {
   const [startDate, setStartDate] = useState("2020-12-09");
   const [endDate, setEndDate] = useState("2022-12-23");
 
-  // useEffect(() => {
-  //   setList(fakeData);
-  //   console.log(list);
-  // }, [fakeData, list]);
-
   // Function
   const handleSelectAll = () => {
     setIsCheckAll(!isCheckAll);
@@ -90,15 +85,17 @@ export default function UpdateEvent() {
   const handleClick = (e: any) => {
     const { id, checked } = e.target;
     const idTypeNumber: number = +id;
-    setIsCheck([...isCheck, idTypeNumber]);
+
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== idTypeNumber));
     }
+
+    setIsCheck([...isCheck, idTypeNumber]);
   };
 
   return (
     <div className="m-5">
-      <form className="block my-0 mx-auto w-[1150px] p-5 bg-gray-100 rounded-xl">
+      <form className="block my-0 mx-auto w-[68.75rem] p-5 bg-gray-100 rounded-xl">
         {/* Title */}
         <h2 className="text-2xl font-semibold pb-4 border-b-2 mb-2">
           Update Event
@@ -109,7 +106,7 @@ export default function UpdateEvent() {
           {/* Change name of event */}
           <div className="form-control w-full max-w-sm pb-5">
             <label className="label">
-              <span className="label-text font-semibold text-[18px]">
+              <span className="label-text font-semibold text-lg">
                 Title
                 <span className="text-[red]">*</span>
               </span>
@@ -122,10 +119,10 @@ export default function UpdateEvent() {
           </div>
 
           {/* Change time of event */}
-          <div className="flex mx gap-[100px]">
+          <div className="flex mx gap-24">
             <div className="flex flex-col w-full max-w-sm">
               <label
-                className="label-text font-semibold text-[16px] mb-2 inline-flex"
+                className="label-text font-semibold text-base mb-2 inline-flex"
                 htmlFor="startDay"
               >
                 Ngày bắt đầu
@@ -141,7 +138,7 @@ export default function UpdateEvent() {
             </div>
             <div className="flex flex-col w-full max-w-sm">
               <label
-                className="label-text font-semibold text-[16px] mb-2 inline-flex"
+                className="label-text font-semibold text-base mb-2 inline-flex"
                 htmlFor="endDay"
               >
                 Ngày kết thúc
@@ -177,10 +174,10 @@ export default function UpdateEvent() {
           </div>
 
           {/* List of user */}
-          <div className="max-h-[300px] overflow-y-scroll">
+          <div className="max-h-80 overflow-y-scroll">
             <table className="table w-full border-collapse relative">
               {/* head */}
-              <thead className="h-[74px]">
+              <thead className="h-20">
                 <tr className="sticky top-0 z-10">
                   <th className="static">
                     <label>
@@ -195,7 +192,7 @@ export default function UpdateEvent() {
                   <th>Họ và tên</th>
                   <th>Role</th>
                   <th>Ban</th>
-                  <th className="min-w-[150px]">
+                  <th className="min-w-[9rem]">
                     {isCheck.length > 0 && (
                       <button className="btn gap-2 text-[12px] h-[2.5rem] min-h-[2.5rem]">
                         <svg
@@ -244,9 +241,9 @@ export default function UpdateEvent() {
                             </div>
                           </div>
                           <div>
-                            <div className="font-bold">{data.full_name}</div>
+                            <div className="font-bold">{data.fullname}</div>
                             <div className="text-sm opacity-50">
-                              {data.Ma_SV}
+                              {data.masv}
                             </div>
                           </div>
                         </div>
@@ -270,10 +267,10 @@ export default function UpdateEvent() {
 
         {/* Accept or delete */}
         <div>
-          <button className="btn btn-success text-white min-w-[100px] mr-3 bg-[#5cb85c]">
+          <button className="btn btn-success text-white min-w-[6.25rem] mr-3 bg-[#5cb85c]">
             Update
           </button>
-          <button className="btn btn-error text-white min-w-[100px] bg-[red]">
+          <button className="btn btn-error text-white min-w-[6.25rem] bg-[red]">
             Cancel
           </button>
         </div>

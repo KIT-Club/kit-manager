@@ -6,7 +6,7 @@ export default function DetailEvent() {
     avatar: string;
     full_name: string;
     username: string;
-    Ma_SV: string;
+    masv: string;
     role: string;
     class: string;
   }
@@ -29,7 +29,7 @@ export default function DetailEvent() {
         "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
       username: "phanhuuviet",
       full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -39,7 +39,7 @@ export default function DetailEvent() {
         "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
       username: "phanhuuviet",
       full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -49,7 +49,7 @@ export default function DetailEvent() {
         "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
       username: "phanhuuviet",
       full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -59,7 +59,7 @@ export default function DetailEvent() {
         "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
       username: "phanhuuviet",
       full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -69,7 +69,7 @@ export default function DetailEvent() {
         "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
       username: "phanhuuviet",
       full_name: "phan huu viet",
-      Ma_SV: "ct050455",
+      masv: "ct050455",
       role: "dev",
       class: "KIT",
     },
@@ -89,7 +89,7 @@ export default function DetailEvent() {
 
   return (
     <div className="m-5">
-      <div className="my-0 mx-auto w-[1150px] p-5 bg-gray-100 rounded-xl">
+      <div className="my-0 mx-auto w-[68.75rem] p-5 bg-gray-100 rounded-xl">
         {/* Title */}
         <div className="pb-4 border-b-2 mb-2">
           <h2 className="text-3xl font-semibold">{fakeDataEvent.name}</h2>
@@ -100,19 +100,17 @@ export default function DetailEvent() {
 
         <div className="border-b-2 border-dashed mb-6 pb-7">
           <div className="w-full max-w-sm pb-5">
-            <span className="label-text font-semibold text-[20px]">
-              Chi tiết
-            </span>
+            <span className="label-text font-semibold text-xl">Chi tiết</span>
           </div>
 
           <div className="flex gap-[100px] ">
             <div className="flex flex-col w-full max-w-sm">
-              <label className="label-text font-semibold text-[16px] mb-2 inline-flex">
+              <label className="label-text font-semibold text-base mb-2 inline-flex">
                 Ngày bắt đầu: {fakeDataEvent.start_date}
               </label>
             </div>
             <div className="flex flex-col w-full max-w-sm">
-              <label className="label-text font-semibold text-[16px] mb-2 inline-flex">
+              <label className="label-text font-semibold text-base mb-2 inline-flex">
                 Ngày kết thúc: {fakeDataEvent.end_date}
               </label>
             </div>
@@ -130,13 +128,13 @@ export default function DetailEvent() {
           <div className="max-h-[350px] overflow-y-scroll">
             <table className="table w-full border-collapse relative">
               {/* head */}
-              <thead className="h-[74px]">
+              <thead className="h-20">
                 <tr className="sticky top-0 z-10">
                   <th className="static"></th>
                   <th>Họ và tên</th>
                   <th>Role</th>
                   <th>Ban</th>
-                  <th className="min-w-[150px]"></th>
+                  <th className="min-w-[9rem]"></th>
                 </tr>
               </thead>
               <tbody>
@@ -157,7 +155,7 @@ export default function DetailEvent() {
                           <div>
                             <div className="font-bold">{data.full_name}</div>
                             <div className="text-sm opacity-50">
-                              {data.Ma_SV}
+                              {data.masv}
                             </div>
                           </div>
                         </div>
