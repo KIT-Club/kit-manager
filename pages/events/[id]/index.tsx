@@ -130,18 +130,18 @@ export default function DetailEvent() {
               {/* head */}
               <thead className="h-20">
                 <tr className="sticky top-0 z-10">
-                  <th className="static"></th>
+                  <th className="rounded-none"></th>
                   <th>Họ và tên</th>
                   <th>Role</th>
                   <th>Ban</th>
-                  <th className="min-w-[9rem]"></th>
+                  <th className="min-w-[9rem] rounded-none"></th>
                 </tr>
               </thead>
               <tbody>
                 {fakeData.map((data) => {
                   return (
                     <tr key={data.id}>
-                      <th className="static"></th>
+                      <th className="!z-0 rounded-none"></th>
                       <td>
                         <div className="flex items-center space-x-3">
                           <div className="avatar">
@@ -162,7 +162,7 @@ export default function DetailEvent() {
                       </td>
                       <td>{data.role}</td>
                       <td>{data.class}</td>
-                      <th>
+                      <th className="rounded-none">
                         <Link href={`/user/${data.id}`}>
                           <button className="btn btn-ghost btn-xs">
                             Chi tiết

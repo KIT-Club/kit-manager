@@ -94,17 +94,24 @@ export default function Events() {
             <tbody>
               {fakeData.map((data, key) => {
                 return (
-                  <tr key={key}>
-                    <th>{key + 1}</th>
+                  <tr className="relative" key={key}>
+                    <td>{key + 1}</td>
                     <td>{data.name}</td>
                     <td>{data.amount}</td>
                     <td>{data.startDay}</td>
                     <td>{data.endDay}</td>
-                    <td>
+                    <td className="relative z-50">
                       <Link href={`/events/${data.id}/update`}>
                         <button className="btn btn-success mr-4">Update</button>
                       </Link>
                       <button className="btn btn-error">Delete</button>
+                    </td>
+
+                    <td className="absolute inset-0 bg-transparent">
+                      <Link
+                        className="absolute inset-0"
+                        href={`/events/${data.id}`}
+                      ></Link>
                     </td>
                   </tr>
                 );

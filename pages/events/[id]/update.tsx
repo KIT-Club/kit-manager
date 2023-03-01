@@ -88,6 +88,7 @@ export default function UpdateEvent() {
 
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== idTypeNumber));
+      return;
     }
 
     setIsCheck([...isCheck, idTypeNumber]);
@@ -177,9 +178,9 @@ export default function UpdateEvent() {
           <div className="max-h-80 overflow-y-scroll">
             <table className="table w-full border-collapse relative">
               {/* head */}
-              <thead className="h-20">
+              <thead className="h-20 ">
                 <tr className="sticky top-0 z-10">
-                  <th className="static">
+                  <th className="rounded-none">
                     <label>
                       <input
                         type="checkbox"
@@ -192,7 +193,7 @@ export default function UpdateEvent() {
                   <th>Họ và tên</th>
                   <th>Role</th>
                   <th>Ban</th>
-                  <th className="min-w-[9rem]">
+                  <th className="min-w-[9rem] rounded-none">
                     {isCheck.length > 0 && (
                       <button className="btn gap-2 text-[12px] h-[2.5rem] min-h-[2.5rem]">
                         <svg
@@ -218,7 +219,7 @@ export default function UpdateEvent() {
                 {fakeData.map((data) => {
                   return (
                     <tr key={data.id}>
-                      <th className="static">
+                      <td className="rounded-none">
                         <label>
                           <input
                             name="checkbox"
@@ -229,7 +230,7 @@ export default function UpdateEvent() {
                             onChange={handleClick}
                           />
                         </label>
-                      </th>
+                      </td>
                       <td>
                         <div className="flex items-center space-x-3">
                           <div className="avatar">
@@ -250,13 +251,13 @@ export default function UpdateEvent() {
                       </td>
                       <td>{data.role}</td>
                       <td>{data.class}</td>
-                      <th>
+                      <td className="rounded-none">
                         <Link href={`/user/${data.id}`}>
                           <button className="btn btn-ghost btn-xs">
                             Chi tiết
                           </button>
                         </Link>
-                      </th>
+                      </td>
                     </tr>
                   );
                 })}
