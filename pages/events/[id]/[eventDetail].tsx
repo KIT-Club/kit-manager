@@ -89,7 +89,7 @@ export default function DetailEvent() {
 
   return (
     <div className="m-5">
-      <div className="my-0 mx-auto w-[68.75rem] p-5 bg-gray-100 rounded-xl">
+      <div className="my-0 mx-auto w-[68.75rem] p-5 bg-base-100 rounded-xl">
         {/* Title */}
         <div className="pb-4 border-b-2 mb-2">
           <h2 className="text-3xl font-semibold">{fakeDataEvent.name}</h2>

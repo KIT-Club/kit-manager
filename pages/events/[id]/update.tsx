@@ -95,7 +95,7 @@ export default function UpdateEvent() {
 
   return (
     <div className="m-5">
-      <form className="block my-0 mx-auto w-[68.75rem] p-5 bg-gray-100 rounded-xl">
+      <form className="block my-0 mx-auto w-[68.75rem] p-5 bg-base-100 rounded-xl">
         {/* Title */}
         <h2 className="text-2xl font-semibold pb-4 border-b-2 mb-2">
           Update Event
