@@ -1,0 +1,10 @@
+.user-index-table {
+    background-color: transparent;
+}
+
+.user-index-table td, .user-index-table th {
+    border: none;
+    background-color: transparent;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
