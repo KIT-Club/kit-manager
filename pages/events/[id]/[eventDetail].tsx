@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function DetailEvent() {
   interface fakeData {
@@ -146,7 +147,7 @@ export default function DetailEvent() {
                         <div className="flex items-center space-x-3">
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
-                              <img
+                              <Image
                                 src={data.avatar}
                                 alt="Avatar Tailwind CSS Component"
                               />

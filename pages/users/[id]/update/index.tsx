@@ -1,19 +1,22 @@
-import styles from "./[id].module.css";
+import styles from "./index.module.css";
 import Image from "next/image";
 
 export default function User() {
   return (
-    <div className="p-4">
-      <div className="avatar ml-4 mt-2">
+    <div className="p-8 prose lg:prose-md">
+      <div className="avatar">
         <div className="w-24 rounded-full">
-          <img
-            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+          <Image
+            src="/sample-avatar.jpg"
             alt="John Doe"
+            width="96"
+            height="96"
+            className="my-0"
           />
         </div>
       </div>
-      <h2 className="card-title ml-4 mb-4">John Doe</h2>
-      <table className={`table bg-transparent ${styles["user-index-table"]}`}>
+      <h2 className="card-title mt-2">John Doe</h2>
+      <table className={`table ${styles["user-table"]}`}>
         <tbody>
           <tr>
             <th>Email</th>
@@ -38,13 +41,25 @@ export default function User() {
           <tr>
             <th>Facebook</th>
             <td>
-              <a href="https://facebook.com">https://facebook.com</a>
+              <input
+                className="input input-sm"
+                type="text"
+                name="facebook"
+                placeholder="Facebook URL..."
+                value="https://www.facebook.com/zuck"
+              ></input>
             </td>
           </tr>
           <tr>
             <th>Github</th>
             <td>
-              <a href="https://github.com">https://github.com</a>
+              <input
+                className="input input-sm"
+                type="text"
+                name="Github"
+                placeholder="Github URL..."
+                value="https://github.com"
+              ></input>
             </td>
           </tr>
           <tr>
@@ -59,11 +74,13 @@ export default function User() {
       </table>
 
       <h3 className="">Event đã tham gia</h3>
-      <table className={`table`}>
+      <table className={`table mb-4`}>
         <thead>
-          <th>Tên</th>
-          <th>Ngày bắt đầu</th>
-          <th>Ngày kết thúc</th>
+          <tr>
+            <th>Tên</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -83,7 +100,7 @@ export default function User() {
           </tr>
         </tbody>
       </table>
-      <button className={`btn btn-primary mt-4 ml-4`}>Cập nhật</button>
+      <button className={`btn btn-primary`}>Lưu</button>
     </div>
   );
 }
