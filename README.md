@@ -22,7 +22,7 @@ You can run this project by using the following commands:
 
 ```bash
 # Install dependencies
-pnpm install
+npm install
 # Run the app
-pnpm dev
+npm dev
 ```
