@@ -100,7 +100,7 @@ export default function User() {
           </tr>
         </tbody>
       </table>
-      <button className={`btn btn-primary`}>Cập nhật</button>
+      <button className={`btn btn-primary`}>Lưu</button>
     </div>
   );
 }
