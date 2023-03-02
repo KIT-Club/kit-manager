@@ -26,8 +26,7 @@ export default function DetailEvent() {
   const fakeData = [
     {
       id: 1,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -36,8 +35,7 @@ export default function DetailEvent() {
     },
     {
       id: 2,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -46,8 +44,7 @@ export default function DetailEvent() {
     },
     {
       id: 3,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -56,8 +53,7 @@ export default function DetailEvent() {
     },
     {
       id: 4,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -66,8 +62,7 @@ export default function DetailEvent() {
     },
     {
       id: 5,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -148,6 +143,8 @@ export default function DetailEvent() {
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <Image
+                                width="20"
+                                height="20"
                                 src={data.avatar}
                                 alt="Avatar Tailwind CSS Component"
                               />

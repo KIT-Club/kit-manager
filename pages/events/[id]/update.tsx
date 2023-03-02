@@ -16,8 +16,7 @@ export default function UpdateEvent() {
   const fakeData = [
     {
       id: 1,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet 1",
       masv: "ct050455",
@@ -26,8 +25,7 @@ export default function UpdateEvent() {
     },
     {
       id: 2,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -36,8 +34,7 @@ export default function UpdateEvent() {
     },
     {
       id: 3,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -46,8 +43,7 @@ export default function UpdateEvent() {
     },
     {
       id: 4,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -56,8 +52,7 @@ export default function UpdateEvent() {
     },
     {
       id: 5,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -237,6 +232,8 @@ export default function UpdateEvent() {
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <Image
+                                width="20"
+                                height="20"
                                 src={data.avatar}
                                 alt="Avatar Tailwind CSS Component"
                               />
