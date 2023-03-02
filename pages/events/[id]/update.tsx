@@ -16,8 +16,7 @@ export default function UpdateEvent() {
   const fakeData = [
     {
       id: 1,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet 1",
       masv: "ct050455",
@@ -26,8 +25,7 @@ export default function UpdateEvent() {
     },
     {
       id: 2,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -36,8 +34,7 @@ export default function UpdateEvent() {
     },
     {
       id: 3,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -46,8 +43,7 @@ export default function UpdateEvent() {
     },
     {
       id: 4,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -56,8 +52,7 @@ export default function UpdateEvent() {
     },
     {
       id: 5,
-      avatar:
-        "https://i...content-available-to-author-only...m.vn/uploads/2018/10/08/anh-phong-canh-tim-dep_093817887.jpg",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       fullname: "phan huu viet",
       masv: "ct050455",
@@ -89,6 +84,7 @@ export default function UpdateEvent() {
 
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== idTypeNumber));
+      return;
     }
 
     setIsCheck([...isCheck, idTypeNumber]);
@@ -178,9 +174,9 @@ export default function UpdateEvent() {
           <div className="max-h-80 overflow-y-scroll">
             <table className="table w-full border-collapse relative">
               {/* head */}
-              <thead className="h-20">
+              <thead className="h-20 ">
                 <tr className="sticky top-0 z-10">
-                  <th className="static">
+                  <th className="rounded-none">
                     <label>
                       <input
                         type="checkbox"
@@ -193,7 +189,7 @@ export default function UpdateEvent() {
                   <th>Họ và tên</th>
                   <th>Role</th>
                   <th>Ban</th>
-                  <th className="min-w-[9rem]">
+                  <th className="min-w-[9rem] rounded-none">
                     {isCheck.length > 0 && (
                       <button className="btn gap-2 text-[12px] h-[2.5rem] min-h-[2.5rem]">
                         <svg
@@ -219,7 +215,7 @@ export default function UpdateEvent() {
                 {fakeData.map((data) => {
                   return (
                     <tr key={data.id}>
-                      <th className="static">
+                      <td className="rounded-none">
                         <label>
                           <input
                             name="checkbox"
@@ -230,12 +226,14 @@ export default function UpdateEvent() {
                             onChange={handleClick}
                           />
                         </label>
-                      </th>
+                      </td>
                       <td>
                         <div className="flex items-center space-x-3">
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <Image
+                                width="20"
+                                height="20"
                                 src={data.avatar}
                                 alt="Avatar Tailwind CSS Component"
                               />
@@ -251,13 +249,13 @@ export default function UpdateEvent() {
                       </td>
                       <td>{data.role}</td>
                       <td>{data.class}</td>
-                      <th>
+                      <td className="rounded-none">
                         <Link href={`/user/${data.id}`}>
                           <button className="btn btn-ghost btn-xs">
                             Chi tiết
                           </button>
                         </Link>
-                      </th>
+                      </td>
                     </tr>
                   );
                 })}

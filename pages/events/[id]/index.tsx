@@ -26,8 +26,7 @@ export default function DetailEvent() {
   const fakeData = [
     {
       id: 1,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -36,8 +35,7 @@ export default function DetailEvent() {
     },
     {
       id: 2,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -46,8 +44,7 @@ export default function DetailEvent() {
     },
     {
       id: 3,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -56,8 +53,7 @@ export default function DetailEvent() {
     },
     {
       id: 4,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -66,8 +62,7 @@ export default function DetailEvent() {
     },
     {
       id: 5,
-      avatar:
-        "https://cdn.dribbble.com/userupload/4047250/file/original-fa17d9af58a0b2122fd6a424c9618a0f.jpg?compress=1&resize=1024x768",
+      avatar: "/sample-avatar.jpg",
       username: "phanhuuviet",
       full_name: "phan huu viet",
       masv: "ct050455",
@@ -131,23 +126,25 @@ export default function DetailEvent() {
               {/* head */}
               <thead className="h-20">
                 <tr className="sticky top-0 z-10">
-                  <th className="static"></th>
+                  <th className="rounded-none"></th>
                   <th>Họ và tên</th>
                   <th>Role</th>
                   <th>Ban</th>
-                  <th className="min-w-[9rem]"></th>
+                  <th className="min-w-[9rem] rounded-none"></th>
                 </tr>
               </thead>
               <tbody>
                 {fakeData.map((data) => {
                   return (
                     <tr key={data.id}>
-                      <th className="static"></th>
+                      <th className="!z-0 rounded-none"></th>
                       <td>
                         <div className="flex items-center space-x-3">
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <Image
+                                width="20"
+                                height="20"
                                 src={data.avatar}
                                 alt="Avatar Tailwind CSS Component"
                               />
@@ -163,7 +160,7 @@ export default function DetailEvent() {
                       </td>
                       <td>{data.role}</td>
                       <td>{data.class}</td>
-                      <th>
+                      <th className="rounded-none">
                         <Link href={`/user/${data.id}`}>
                           <button className="btn btn-ghost btn-xs">
                             Chi tiết
