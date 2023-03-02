@@ -6,7 +6,6 @@
 
 - Node.js
 - npm
-- pnpm
 
 #### Core Libraries
 
@@ -24,5 +23,5 @@ You can run this project by using the following commands:
 # Install dependencies
 npm install
 # Run the app
-npm dev
+npm run dev
 ```
