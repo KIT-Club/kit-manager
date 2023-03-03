@@ -1,19 +1,4 @@
- @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@600;700&display=swap');
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body{
-    min-height: 100vh;
-    background-color: #72cdee;
-    font-family: 'PT Sans', sans-serif;;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@600;700&display=swap');
 
 .login{  
     width: 50%;
@@ -28,7 +13,7 @@ body{
 
 /* css logo và Manager */
 
-.login_left{
+.login .login_left{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -36,25 +21,25 @@ body{
     align-items: center;
 }
 
-.login_left img {
+.login .login_left img {
       width: 70%;
 }
 
-.login_left h1{
+.login .login_left h1{
     font-size: 70px;
     padding-left: 50px;
 }
 
 /* css form đăng nhập */
 
-.login_right{
+.login .login_right{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.login_content{
+.login .login_content{
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -63,18 +48,18 @@ body{
     align-items: center;
 }
 
-.login_header h1{
+.login .login_header h1{
     font-size: 45px;
     font-weight: 700px;
 }
 
-.login_item{
+.login .login_item{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
 
-.input {
+.login .input {
     width: 110%;
     line-height: 20px;
     border: 2px solid transparent;
@@ -86,25 +71,25 @@ body{
     transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.input::placeholder {
+.login .input::placeholder {
     color: #777;
 }
 
-.input:focus::placeholder {
+.login .input:focus::placeholder {
     opacity: 0;
     transition: opacity .2s;
 }
 
 /* css nút button */
 
-button{
+.login button{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-button {
+.login button {
     width: 60%;
     height: 50px;
     border: none;
