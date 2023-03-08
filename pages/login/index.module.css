@@ -1,54 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@600;700&display=swap');
 
+
 .login{  
     width: 50%;
-    height: 450px;
+    height: 400px;
     background-color: #fef9f3;
     display: grid;
     grid-template-columns: 1fr 1fr;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    position: relative;
+    margin: 50 auto;
+    top: 150px;
+    left: 382.5px;
 }
 
 /* css logo và Manager */
 
-.login .login_left{
+.login .login_left {
     width: 100%;
-    display: flex;
+    position: relative;
+    padding-top: 300px;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
 }
 
 .login .login_left img {
-      width: 70%;
+    position: relative;
+    top: 100px !important;
 }
 
-.login .login_left h1{
-    font-size: 70px;
-    padding-left: 50px;
+.login .login_left h1 {
+    font-size: 70px !important;
 }
 
-/* css form đăng nhập */
+/* css form log_in */
 
 .login .login_right{
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    padding-top: 50px;
 }
 
-.login .login_content{
+.login .login_right .login_content{
     width: 80%;
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
-    gap: 25px;
+    gap: 30px;
     align-items: center;
 }
 
-.login .login_header h1{
+.login .login_right .login_content .login_header h1{
     font-size: 45px;
     font-weight: 700px;
 }
@@ -60,7 +69,7 @@
 }
 
 .login .input {
-    width: 110%;
+    width: 80%;
     line-height: 20px;
     border: 2px solid transparent;
     border-bottom-color: #777;
@@ -70,7 +79,12 @@
     color: #0d0c22;
     transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-
+.login .input:focus {
+ outline: none;
+ padding: .1rem 1rem;
+ border-radius: 1rem;
+ border-color: #7a9cc6;
+}
 .login .input::placeholder {
     color: #777;
 }
@@ -83,7 +97,8 @@
 /* css nút button */
 
 .login button{
-    display: flex;
+    padding-top: 50px;
+    display: flex !important;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -102,14 +117,4 @@
     text-transform: uppercase;
     font-size: 18px;
     cursor: pointer;
-    /* transition: background-color .3s ease; */
-}
-
-/* reponsive */
-@media only screen and (max-width: 768px) {
-    /* tablets and desktop */
-    .login{
-        width: 80%;
-        height: 500px;
-    }
 }

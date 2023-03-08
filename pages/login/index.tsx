@@ -1,20 +1,18 @@
-import Image from "next/image";
+import Image from "next/image"; 
 import styles from "./index.module.css";
 
-export default function Events() {
+export default function Login() {
   return (
     <div className={`${styles.login}`}>
       <div className="login_left">
-        <Image src="/kit-branding.png" alt="" width="1000" height="500" />
-        <h1>Manager</h1>
+        <Image src="/kit-branding.png" alt="" width="500" height="300" />
+       <h1>Manager</h1>
       </div>
-
       <div className="login_right">
         <form className="login_content">
           <div className="login_header">
             <h1 className="heading">Sign in</h1>
           </div>
-
           <div className="login_item">
             <svg
               width="40px"
@@ -77,12 +75,6 @@ export default function Events() {
               required
             />
           </div>
-          <div className="form-item">
-            <input type="checkbox" id="RememberPassword" />
-            <label htmlFor="RememberPassword" id="checkboxlabel">
-              Remember Password
-            </label>
-          </div>
           <button type="submit">
             <svg
               width="35px"
@@ -114,5 +106,6 @@ export default function Events() {
         </form>
       </div>
     </div>
+    
   );
 }
