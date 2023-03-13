@@ -20,6 +20,7 @@
 You can run this project by using the following commands:
 
 ```bash
+cp .env.local.example .env
 # Install dependencies
 npm install
 # Run the app

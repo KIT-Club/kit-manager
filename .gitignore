@@ -38,3 +38,5 @@ next-env.d.ts
 # ides
 .idea
 .vscode
+
+.env

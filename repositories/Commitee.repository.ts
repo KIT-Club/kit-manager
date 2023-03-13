@@ -1,34 +1,26 @@
 import { api } from "../core/axios";
 
-const getAllCommittees = async () => {
-  const response = await api.get("/committees");
+export const getAllCommittees = async (params: any) => {
+  const response = await api.get("/committees", { params });
   return response.data;
 };
 
-const getCommitteeById = async (id: number) => {
+export const getCommitteeById = async (id: number) => {
   const response = await api.get(`/committees/${id}`);
   return response.data;
 };
 
-const createCommittee = async (committee: any) => {
+export const createCommittee = async (committee: any) => {
   const response = await api.post("/committees", committee);
   return response.data;
 };
 
-const updateCommittee = async (id: number, committee: any) => {
+export const updateCommittee = async (id: number, committee: any) => {
   const response = await api.put(`/committees/${id}`, committee);
   return response.data;
 };
 
-const deleteCommittee = async (id: number) => {
+export const deleteCommittee = async (id: number) => {
   const response = await api.delete(`/committees/${id}`);
   return response.data;
-};
-
-module.exports = {
-  getAllCommittees,
-  getCommitteeById,
-  createCommittee,
-  updateCommittee,
-  deleteCommittee,
 };
