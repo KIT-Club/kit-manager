@@ -1,6 +1,35 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getAllEvents } from "../../repositories/Event.repository";
 
 export default function Events() {
+  interface evData {
+    id: number;
+    name: string;
+    description: string;
+    start_date: Date;
+    end_date: Date;
+    users: [];
+  }
+
+  // State
+  const [evData, setEvData] = useState<Array<evData>>([]);
+
+  const getData = async () => {
+    try {
+      const evData = await getAllEvents();
+      setEvData(evData);
+      console.log(evData);
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      console.log(123);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   // fake data API
   const fakeData = [
     {
