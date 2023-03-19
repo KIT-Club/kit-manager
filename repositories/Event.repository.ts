@@ -1,7 +1,7 @@
 import { api } from "../core/axios";
 
-export const getAllEvents = async () => {
-  const response = await api.get("/events");
+export const getAllEvents = async (params: any) => {
+  const response = await api.get("/events", { params });
   return response.data;
 };
 

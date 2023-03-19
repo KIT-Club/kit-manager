@@ -1,6 +1,122 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getAllEvents } from "../../repositories/Event.repository";
 
 export default function Events() {
+  interface evData {
+    id: number;
+    name: string;
+    description: string;
+    start_date: string;
+    end_date: string;
+    users: [];
+  }
+
+  // State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
+  const [evData, setEvData] = useState<Array<evData>>([]);
+
+  // Function
+  const getData = async () => {
+    try {
+      setLoading(true);
+      const events = await getAllEvents({ page: currentPage });
+      setEvData(events.data);
+      setMaxPage(events.last_page);
+    } catch (err: any) {
+      setErr(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const renderTable = () => {
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center min-h-[3rem]">
+          <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        </div>
+      );
+    }
+
+    if (err && err.length > 0) {
+      return <div>{err}</div>;
+    }
+
+    if (evData.length > 0) {
+      return (
+        <>
+          <table className="table table-compact w-full">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Tên event</th>
+                <th>Số lượng</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {evData.map((data, key) => {
+                return (
+                  <tr className="relative align-top" key={key}>
+                    <td>{key + 1}</td>
+                    <td>{data.name}</td>
+                    <td>{data.description}</td>
+                    <td>{data.start_date}</td>
+                    <td>{data.end_date}</td>
+                    <td className="relative z-50">
+                      <Link href={`/events/${data.id}/update`}>
+                        <button className="btn btn-success mr-4">Update</button>
+                      </Link>
+                      <label htmlFor="input_del-ev" className="btn btn-error">
+                        Delete
+                      </label>
+                    </td>
+
+                    <td className="absolute inset-0 bg-transparent">
+                      <Link
+                        className="absolute inset-0"
+                        href={`/events/${data.id}`}
+                      ></Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
+      );
+    }
+
+    if (evData.length === 0) {
+      return <div>Không có data</div>;
+    }
+  };
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1 > maxPage ? 1 : currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
+  };
+
+  // Hooks
+  useEffect(() => {
+    getData();
+  }, [currentPage]);
   // fake data API
   const fakeData = [
     {
@@ -170,48 +286,7 @@ export default function Events() {
         </label>
 
         {/* table event */}
-        <div className="overflow-x-auto w-full mb-6">
-          <table className="table table-compact w-full">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Tên event</th>
-                <th>Số lượng</th>
-                <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {fakeData.map((data, key) => {
-                return (
-                  <tr className="relative" key={key}>
-                    <td>{key + 1}</td>
-                    <td>{data.name}</td>
-                    <td>{data.amount}</td>
-                    <td>{data.startDay}</td>
-                    <td>{data.endDay}</td>
-                    <td className="relative z-50">
-                      <Link href={`/events/${data.id}/update`}>
-                        <button className="btn btn-success mr-4">Update</button>
-                      </Link>
-                      <label htmlFor="input_del-ev" className="btn btn-error">
-                        Delete
-                      </label>
-                    </td>
-
-                    <td className="absolute inset-0 bg-transparent">
-                      <Link
-                        className="absolute inset-0"
-                        href={`/events/${data.id}`}
-                      ></Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <div className="overflow-x-auto w-full mb-6">{renderTable()}</div>
 
         {/* Modal delete event */}
         <input type="checkbox" id="input_del-ev" className="modal-toggle" />
@@ -240,10 +315,15 @@ export default function Events() {
         {/* Navigation */}
         <div className="flex justify-center items-center">
           <div className="btn-group">
-            <button className="btn">1</button>
-            <button className="btn btn-active">2</button>
-            <button className="btn">3</button>
-            <button className="btn">4</button>
+            <button className="btn" onClick={prevPage}>
+              «
+            </button>
+            <button className="btn pointer-events-none">
+              Page {currentPage}
+            </button>
+            <button className="btn" onClick={nextPage}>
+              »
+            </button>
           </div>
         </div>
       </div>
