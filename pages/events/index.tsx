@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllEvents } from "../../repositories/Event.repository";
 
 export default function Events() {
-  interface evData {
+  interface EvData {
     id: number;
     name: string;
     description: string;
@@ -17,13 +17,14 @@ export default function Events() {
   const [maxPage, setMaxPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
-  const [evData, setEvData] = useState<Array<evData>>([]);
+  const [evData, setEvData] = useState<Array<EvData>>([]);
 
   // Function
   const getData = async () => {
     try {
       setLoading(true);
       const events = await getAllEvents({ page: currentPage });
+      console.log(events);
       setEvData(events.data);
       setMaxPage(events.last_page);
     } catch (err: any) {
