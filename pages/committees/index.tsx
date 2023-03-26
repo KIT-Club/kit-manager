@@ -1,5 +1,7 @@
 // import { useQuery } from "@tanstack/react-query";
 import { getAllCommittees } from "../../repositories/Commitee.repository";
+import CommitteeTable from "./CommitteeTable.js";
+import styles from './committee-table.module.css';
 import { useState, useEffect } from "react";
 
 // const useCommittee = () => {
@@ -16,6 +18,7 @@ export default function CommitteeTablePage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const getData = async () => {
+  
     try {
       setLoading(true);
       const data = await getAllCommittees({
@@ -53,28 +56,7 @@ export default function CommitteeTablePage() {
     if (committees.length > 0) {
       return (
         <>
-          <table>
-            <thead>
-              <tr>
-                <th className="text-left">Id</th>
-                <th className="text-left">Name</th>
-                <th className="text-left">Created at</th>
-                <td className="text-right">Actions</td>
-              </tr>
-            </thead>
-            <tbody>
-              {committees.map((committee) => (
-                <tr key={committee.id}>
-                  <td>{committee.id}</td>
-                  <td>{committee.name}</td>
-                  <td>{committee.created_at}</td>
-                  <td>
-                    <button className="btn">Update</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <CommitteeTable committees={committees} styles={styles}/>
         </>
       );
     }
@@ -86,19 +68,22 @@ export default function CommitteeTablePage() {
 
   return (
     <>
-      <button className="btn">Create +</button>
+    <header>
+      <button className={`btn btn-outline ${styles["add-committee-btn"]}`}><b>+ Thêm ban</b></button>
+    </header>
+    <section className={styles["table-wrapper"]}>
       {renderTable()}
-      <div>
-        <button className="btn" onClick={prevPage}>
-          Trang trước
-        </button>
-        <button className="text-white inline-block ml-2 mr-2" disabled>
-          Trang hiện tại: {currentPage}
-        </button>
-        <button className="btn" onClick={nextPage}>
-          Trang sau
-        </button>
+      <div className={`btn-group ${styles.pagnitation}`}> {/*btn-group is DasyUI class} */}
+      <button 
+      className="btn pagnitation-button" 
+      onClick={prevPage}
+      >«</button>
+      <button className="btn pagnitation-button" disabled>Page {currentPage}</button>
+      <button className="btn pagnitation-button" 
+      onClick={nextPage}
+      disabled={currentPage == committees["last_page"] ? false : true}>»</button>
       </div>
+    </section>
     </>
   );
 }
