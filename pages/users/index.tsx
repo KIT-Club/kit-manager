@@ -1,19 +1,56 @@
 import { useState, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { getAllUsers, addUser } from "../../repositories/User.repository";
+import {
+  getAllUsers,
+  addUser,
+  deleteUser,
+} from "../../repositories/User.repository";
 import { getAllCommittees } from "../../repositories/Commitee.repository";
 import { getAllRoles } from "../../repositories/Role.repository";
 import ErrorAlert from "../alert/error";
 import Pagination from "../../components/pagination";
 
 function App() {
+  // --- Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentLimit, setCurrentLimit] = useState(5);
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+  // ---
+
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => getAllUsers({ includes: "roles,committees" }),
+    queryKey: ["users", currentPage],
+    queryFn: () =>
+      getAllUsers({
+        includes: "roles,committees",
+        page: currentPage,
+        limit: currentLimit,
+      }),
   });
+
+  // --- Delete user
+  const [deleteUserId, setDeleteUserId] = useState(0);
+  const deleteUserMutation = useMutation(deleteUser, {
+    onSuccess: () => {
+      deleteUserMutation.reset();
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+    onError: (err: any) => {
+      alert(err?.message?.response?.data?.error);
+    },
+    onSettled: (data: any, error: any, variables: any, context: any) => {
+      setDeleteUserId(0);
+    },
+  });
+  const handleDeleteUser = (id: number) => {
+    setDeleteUserId(id);
+    deleteUserMutation.mutate(id);
+  };
+  // ---
 
   // --- Add user
   const [formCreateData, setFormCreateData] = useState({
@@ -174,7 +211,7 @@ function App() {
               >
                 ✕
               </label>
-              <div className="content-add-user">
+              <div>
                 <form className="form-add-user" onSubmit={handleAddUser}>
                   <h3 className="font-bold text-center mt-2">
                     Thêm thành viên
@@ -242,90 +279,121 @@ function App() {
   if (error) return <ErrorAlert msg={(error as any).response?.data?.error} />;
 
   return (
-    <div className="App">
-      <div className="main-content">
-        <div className="btn-add-user mb-4">
-          <label htmlFor="add-user-popup" className="btn">
-            Thêm thành viên
-          </label>
-        </div>
-
-        <div className="user-table mb-4">
-          <div className="overflow-x-auto w-full">
-            <table className="table w-full">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th>MSSV</th>
-                  <th>Họ và tên</th>
-                  <th>Lớp</th>
-                  <th>Ban</th>
-                  <th>Vai trò</th>
-                  <th>Hành động</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.data.map((item: any) => {
-                  return (
-                    <tr key={item.id}>
-                      <td>
-                        <div className="msv">{item.username}</div>
-                      </td>
-                      <td>
-                        <div className="flex items-center space-x-3">
-                          <div className="avatar">
-                            <div className="mask mask-squircle w-12 h-12">
-                              <Image
-                                src="/kit-logo.png"
-                                alt=""
-                                width="32"
-                                height="32"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="font-bold">{item.name}</div>
-                            <div className="text-sm opacity-50">
-                              {item.email}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="class">{item.class}</div>
-                      </td>
-                      <td>
-                        {item.committees.length &&
-                          item.committees
-                            .map((item: any) => item.name)
-                            .join(", ")}
-                      </td>
-                      <td>{item.roles.length && item.roles[0].name}</td>
-                      <th>
-                        <div className="btn-table">
-                          <button className="btn btn-sm bg-cyan-500 text-white mr-1">
-                            Update
-                          </button>
-                          <button className="btn btn-ghost btn-xs">
-                            Delete
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <Pagination data={data} />
-
-        <div className="footer"></div>
+    <>
+      <div className="mb-4">
+        <label htmlFor="add-user-popup" className="btn">
+          Thêm thành viên
+        </label>
       </div>
 
+      <div className="mb-4 w-full">
+        <table className="table w-full">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>MSSV</th>
+              <th>Họ và tên</th>
+              <th>Lớp</th>
+              <th>Ban</th>
+              <th>Vai trò</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.data.map((item: any) => {
+              return (
+                <tr key={item.id}>
+                  <td>
+                    <div className="msv">{item.username}</div>
+                  </td>
+                  <td>
+                    <div className="flex items-center space-x-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <Image
+                            src="/kit-logo.png"
+                            alt=""
+                            width="32"
+                            height="32"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{item.name}</div>
+                        <div className="text-sm opacity-50">{item.email}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="class">{item.class}</div>
+                  </td>
+                  <td>
+                    {item.committees.length &&
+                      item.committees.map((item: any) => item.name).join(", ")}
+                  </td>
+                  <td>{item.roles.length && item.roles[0].name}</td>
+                  <th>
+                    <div>
+                      <button className="btn btn-sm bg-cyan-500 text-white mr-1">
+                        Cập nhật
+                      </button>
+                      <div className="dropdown">
+                        <label
+                          tabIndex={
+                            deleteUserMutation.isLoading &&
+                            deleteUserId == item.id
+                              ? undefined
+                              : 0
+                          }
+                          className={
+                            "btn btn-sm bg-error-500 text-white mr-1 " +
+                            (deleteUserMutation.isLoading &&
+                              deleteUserId == item.id &&
+                              "loading")
+                          }
+                        >
+                          {!(
+                            deleteUserMutation.isLoading &&
+                            deleteUserId == item.id
+                          ) && "Xóa"}
+                        </label>
+                        <ul
+                          tabIndex={0}
+                          className="dropdown-content menu p-2 bg-base-100 rounded-box"
+                        >
+                          <li>
+                            <button
+                              className={
+                                "btn btn btn-error " +
+                                (deleteUserMutation.isLoading &&
+                                deleteUserId == item.id
+                                  ? "loading"
+                                  : "")
+                              }
+                              onClick={() => handleDeleteUser(item.id)}
+                              disabled={
+                                deleteUserMutation.isLoading &&
+                                deleteUserId == item.id
+                              }
+                            >
+                              Chắc chắn xóa!
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <Pagination data={data} onPageChange={onPageChange} />
+
       {addUserPopupEl()}
-    </div>
+    </>
   );
 }
 
