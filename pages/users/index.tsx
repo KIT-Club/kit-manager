@@ -1,15 +1,16 @@
 import { useState, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import { getAllCommittees } from "../../repositories/Commitee.repository";
+import { getAllRoles } from "../../repositories/Role.repository";
+import ErrorAlert from "../alert/error";
+import Pagination from "../../components/pagination";
+import Link from "next/link";
 import {
   getAllUsers,
   addUser,
   deleteUser,
 } from "../../repositories/User.repository";
-import { getAllCommittees } from "../../repositories/Commitee.repository";
-import { getAllRoles } from "../../repositories/Role.repository";
-import ErrorAlert from "../alert/error";
-import Pagination from "../../components/pagination";
 
 function App() {
   // --- Pagination
@@ -118,6 +119,7 @@ function App() {
         page: 1,
         limit: 9999,
       }),
+    refetchOnWindowFocus: false,
   });
 
   const roleData = useQuery({
@@ -127,6 +129,7 @@ function App() {
         page: 1,
         limit: 9999,
       }),
+    refetchOnWindowFocus: false,
   });
 
   const committeeEl = () => {
@@ -334,9 +337,12 @@ function App() {
                   <td>{item.roles.length && item.roles[0].name}</td>
                   <th>
                     <div>
-                      <button className="btn btn-sm bg-cyan-500 text-white mr-1">
+                      <Link
+                        href={`/users/${item.id}`}
+                        className="btn btn-sm bg-cyan-500 text-white mr-1"
+                      >
                         Cập nhật
-                      </button>
+                      </Link>
                       <div className="dropdown">
                         <label
                           tabIndex={
