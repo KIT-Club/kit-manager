@@ -22,7 +22,7 @@ export default function Login() {
       localStorageService.set("token", res.token);
       router.push("/users");
     } catch (err: any) {
-      setErr(err.response?.data?.error);
+      setErr(err.response?.data?.error ?? "Có lỗi xảy ra");
     } finally {
       setLoading(false);
     }

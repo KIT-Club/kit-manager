@@ -41,7 +41,7 @@ function App() {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
     onError: (err: any) => {
-      alert(err?.message?.response?.data?.error);
+      alert(err?.message?.response?.data?.error ?? "Có lỗi xảy ra");
     },
     onSettled: (data: any, error: any, variables: any, context: any) => {
       setDeleteUserId(0);
@@ -279,7 +279,12 @@ function App() {
       <progress className="progress progress-info w-56 mt-8 mb-8"></progress>
     );
 
-  if (error) return <ErrorAlert msg={(error as any).response?.data?.error} />;
+  if (error)
+    return (
+      <ErrorAlert
+        msg={(error as any).response?.data?.error ?? "Có lỗi xảy ra"}
+      />
+    );
 
   return (
     <>

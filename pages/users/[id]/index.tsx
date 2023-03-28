@@ -74,7 +74,12 @@ export default function User() {
     return (
       <progress className="progress progress-info w-56 mt-8 mb-8"></progress>
     );
-  if (error) return <ErrorAlert msg={(error as any).response?.data?.error} />;
+  if (error)
+    return (
+      <ErrorAlert
+        msg={(error as any).response?.data?.error ?? "Có lỗi xảy ra"}
+      />
+    );
   if (!data?.data) return null;
   return (
     <div className="p-8 prose lg:prose-md">
@@ -210,7 +215,10 @@ export default function User() {
       {updateUserMutation.isError && (
         <ErrorAlert
           className="mb-4"
-          msg={(updateUserMutation.error as any).response?.data?.error}
+          msg={
+            (updateUserMutation.error as any).response?.data?.error ??
+            "Có lỗi xảy ra"
+          }
         />
       )}
       <button
