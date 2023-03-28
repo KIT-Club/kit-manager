@@ -13,7 +13,7 @@ function CommitteeTable({committees, styles}) {
         <th>Hành động</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody className={styles["table-body"]}>
       {committees.map((committee, index) => {
         const {id, name, created_at} = committee;
          

@@ -81,7 +81,7 @@ export default function CommitteeTablePage() {
       <button className="btn pagnitation-button" disabled>Page {currentPage}</button>
       <button className="btn pagnitation-button" 
       onClick={nextPage}
-      disabled={currentPage == committees["last_page"] ? false : true}>»</button>
+      disabled={currentPage == committees["last_page"] ? true : false}>»</button>
       </div>
     </section>
     </>

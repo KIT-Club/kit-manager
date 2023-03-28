@@ -10,12 +10,12 @@
   white-space: nowrap;
 }
 
-tbody tr:hover {
+.table-body tr:hover {
   background-color: rgba(142, 138, 138, 0.196);
 }
 
-th,td,tr{
-  padding: 2rem;
+.table-wrapper th,td,tr{
+  padding: 1.5rem;
 }
 
 .head-row {
