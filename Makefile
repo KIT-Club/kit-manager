@@ -1,2 +1,2 @@
 dev:
-	bun run dev
+	npm run dev

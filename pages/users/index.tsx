@@ -375,7 +375,7 @@ function App() {
                           <li>
                             <button
                               className={
-                                "btn btn btn-error " +
+                                "btn btn-error " +
                                 (deleteUserMutation.isLoading &&
                                 deleteUserId == item.id
                                   ? "loading"
