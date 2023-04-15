@@ -1,7 +1,7 @@
 // import { useQuery } from "@tanstack/react-query";
 import { getAllCommittees } from "../../repositories/Commitee.repository";
-import CommitteeTable from "./CommitteeTable.js";
-import styles from './committee-table.module.css';
+import CommitteeTable from "./CommitteeTable";
+import styles from "./committee-table.module.css";
 import { useState, useEffect } from "react";
 
 // const useCommittee = () => {
@@ -16,14 +16,15 @@ export default function CommitteeTablePage() {
   const [err, setErr] = useState<string>("");
   const [committees, setCommittees] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(1);
 
   const getData = async () => {
-  
     try {
       setLoading(true);
       const data = await getAllCommittees({
         page: currentPage,
       });
+      setLastPage(data.last_page);
       setCommittees(data.data);
     } catch (err: any) {
       setErr(err.message);
@@ -56,7 +57,7 @@ export default function CommitteeTablePage() {
     if (committees.length > 0) {
       return (
         <>
-          <CommitteeTable committees={committees} styles={styles}/>
+          <CommitteeTable committees={committees} styles={styles} />
         </>
       );
     }
@@ -68,22 +69,30 @@ export default function CommitteeTablePage() {
 
   return (
     <>
-    <header>
-      <button className={`btn btn-outline ${styles["add-committee-btn"]}`}><b>+ Thêm ban</b></button>
-    </header>
-    <section className={styles["table-wrapper"]}>
-      {renderTable()}
-      <div className={`btn-group ${styles.pagnitation}`}> {/*btn-group is DasyUI class} */}
-      <button 
-      className="btn pagnitation-button" 
-      onClick={prevPage}
-      >«</button>
-      <button className="btn pagnitation-button" disabled>Page {currentPage}</button>
-      <button className="btn pagnitation-button" 
-      onClick={nextPage}
-      disabled={currentPage == committees["last_page"] ? true : false}>»</button>
-      </div>
-    </section>
+      <header>
+        <button className={`btn btn-outline ${styles["add-committee-btn"]}`}>
+          <b>+ Thêm ban</b>
+        </button>
+      </header>
+      <section className={styles["table-wrapper"]}>
+        {renderTable()}
+        <div className={`btn-group ${styles.pagnitation}`}>
+          {/*btn-group is DasyUI class} */}
+          <button className="btn pagnitation-button" onClick={prevPage}>
+            «
+          </button>
+          <button className="btn pagnitation-button" disabled>
+            Page {currentPage}
+          </button>
+          <button
+            className="btn pagnitation-button"
+            onClick={nextPage}
+            disabled={currentPage == lastPage ? true : false}
+          >
+            »
+          </button>
+        </div>
+      </section>
     </>
   );
 }

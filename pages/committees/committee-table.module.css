@@ -14,9 +14,11 @@
   background-color: rgba(142, 138, 138, 0.196);
 }
 
-.table-wrapper th,td,tr{
+.table-cell{
   padding: 1.5rem;
 }
+
+
 
 .head-row {
   background-color: #28282b84;
@@ -46,7 +48,7 @@
   .pagnitation {
     left: 39%;
   }
-}
+}  
 
 
 .pagnitation-button {
