@@ -5,6 +5,7 @@ import {
   deleteEvent,
   createEvent,
 } from "../../repositories/Event.repository";
+import Pagination from "../../components/pagination";
 
 export default function Events() {
   interface evData {
@@ -21,6 +22,7 @@ export default function Events() {
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
   const [evData, setEvData] = useState<Array<evData>>([]);
+  const [APIData, setAPIData] = useState({});
 
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
@@ -36,12 +38,16 @@ export default function Events() {
   const closePopupCreateEv = useRef<HTMLLabelElement>(null);
 
   // Function
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   const getData = async () => {
     try {
       setLoading(true);
       const events = await getAllEvents({ page: currentPage });
       setEvData(events.data);
-      setMaxPage(events.last_page);
+      setAPIData(events);
     } catch (err: any) {
       setErr(err.message);
     } finally {
@@ -152,14 +158,6 @@ export default function Events() {
     if (evData.length === 0) {
       return <div>Không có data</div>;
     }
-  };
-
-  const nextPage = () => {
-    setCurrentPage(currentPage + 1 > maxPage ? 1 : currentPage + 1);
-  };
-
-  const prevPage = () => {
-    setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
   };
 
   const resetCreateEvForm = () => {
@@ -321,19 +319,9 @@ export default function Events() {
           </div>
         </label>
 
-        {/* Navigation */}
-        <div className="flex justify-center items-center">
-          <div className="btn-group">
-            <button className="btn" onClick={prevPage}>
-              «
-            </button>
-            <button className="btn pointer-events-none">
-              Page {currentPage}
-            </button>
-            <button className="btn" onClick={nextPage}>
-              »
-            </button>
-          </div>
+        {/* Pagination */}
+        <div className="flex justify-center">
+          <Pagination data={APIData} onPageChange={onPageChange} />
         </div>
       </div>
     </div>
