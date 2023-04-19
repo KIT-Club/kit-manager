@@ -1,9 +1,13 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { getAllEvents } from "../../repositories/Event.repository";
+import { useEffect, useRef, useState } from "react";
+import {
+  getAllEvents,
+  deleteEvent,
+  createEvent,
+} from "../../repositories/Event.repository";
 
 export default function Events() {
-  interface EvData {
+  interface evData {
     id: number;
     name: string;
     description: string;
@@ -13,24 +17,64 @@ export default function Events() {
   }
 
   // State
+  const [currentEv, setCurrentEv] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
+  const [evData, setEvData] = useState<Array<evData>>([]);
+
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
-  const [evData, setEvData] = useState<Array<EvData>>([]);
+  const [errMess, setErrMess] = useState("");
+
+  const [title, setTitle] = useState("");
+  const [description, setDesciption] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  // Ref
+  const closePopupDelEv = useRef<HTMLLabelElement>(null);
+  const closePopupCreateEv = useRef<HTMLLabelElement>(null);
 
   // Function
   const getData = async () => {
     try {
       setLoading(true);
       const events = await getAllEvents({ page: currentPage });
-      console.log(events);
       setEvData(events.data);
       setMaxPage(events.last_page);
     } catch (err: any) {
       setErr(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const delEv = async () => {
+    try {
+      await deleteEvent(currentEv);
+      closePopupDelEv.current?.click();
+      getData();
+    } catch (err: any) {
+      setErr(err.message);
+    }
+  };
+
+  const postEv = async (e: any) => {
+    e.preventDefault();
+    const data = {
+      name: title,
+      description: description,
+      start_date: startDate,
+      end_date: endDate,
+      user_ids: [1], // Hiện tại miêu tả của thêm event trong trello thiếu mất phần thêm user
+    };
+
+    try {
+      await createEvent(data);
+      getData();
+      resetCreateEvForm();
+    } catch (err: any) {
+      setErrMess(err.response.data.error);
     }
   };
 
@@ -62,7 +106,7 @@ export default function Events() {
               <tr>
                 <th></th>
                 <th>Tên event</th>
-                <th>Số lượng</th>
+                <th>Mô tả</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th></th>
@@ -81,7 +125,11 @@ export default function Events() {
                       <Link href={`/events/${data.id}/update`}>
                         <button className="btn btn-success mr-4">Update</button>
                       </Link>
-                      <label htmlFor="input_del-ev" className="btn btn-error">
+                      <label
+                        htmlFor="input_del-ev"
+                        className="btn btn-error"
+                        onClick={() => setCurrentEv(data.id)}
+                      >
                         Delete
                       </label>
                     </td>
@@ -114,83 +162,19 @@ export default function Events() {
     setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
   };
 
+  const resetCreateEvForm = () => {
+    setTitle("");
+    setDesciption("");
+    setStartDate("");
+    setEndDate("");
+    setErrMess("");
+    closePopupCreateEv.current?.click();
+  };
+
   // Hooks
   useEffect(() => {
     getData();
   }, [currentPage]);
-  // fake data API
-  const fakeData = [
-    {
-      id: 1,
-      name: "Chào tân",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 2,
-      name: "Chào tân 1",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 3,
-      name: "Chào tân 2",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 4,
-      name: "Chào tân 3",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 5,
-      name: "Chào tân 4",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 6,
-      name: "Chào tân 5",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 7,
-      name: "Chào tân 6",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 8,
-      name: "Chào tân 7",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 9,
-      name: "Chào tân 8",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-    {
-      id: 10,
-      name: "Chào tân 9",
-      amount: 2,
-      startDay: "06/07/2002",
-      endDay: "06/07/2002",
-    },
-  ];
 
   return (
     <div className="m-5">
@@ -205,9 +189,13 @@ export default function Events() {
 
         {/* Modal add event */}
         <input type="checkbox" id="input_add-ev" className="modal-toggle" />
-        <label htmlFor="input_add-ev" className="modal">
+        <label
+          htmlFor="input_add-ev"
+          className="modal"
+          ref={closePopupCreateEv}
+        >
           <label htmlFor="" className="w-[50rem]">
-            <div className="modal-box max-w-none">
+            <form className="modal-box max-w-none" onSubmit={postEv}>
               {/* Wrapper for content */}
               <div className="flex flex-col gap-5">
                 {/* Title */}
@@ -225,29 +213,35 @@ export default function Events() {
                       </span>
                     </label>
                     <input
+                      onChange={(e) => setTitle(e.target.value)}
+                      value={title}
                       id="input_title"
                       type="text"
                       placeholder="Type here"
                       className="input input-bordered "
+                      required
                     />
                   </div>
                   <div className="form-control basis-1/3 w-full max-w-sm pb-5">
                     <label htmlFor="input_amount" className="label">
                       <span className="label-text font-semibold text-base">
-                        Số lượng
+                        Mô tả
                       </span>
                     </label>
                     <input
+                      onChange={(e) => setDesciption(e.target.value)}
+                      value={description}
                       id="input_amount"
                       type="text"
                       placeholder="Type here"
                       className="input input-bordered w-full"
+                      required
                     />
                   </div>
                 </div>
 
                 {/* Start day + end day */}
-                <div className="flex mx gap-12">
+                <div className="flex mx gap-12 relative">
                   <div className="flex flex-col w-full max-w-sm">
                     <label
                       className="label-text font-semibold text-base mb-2 inline-flex"
@@ -257,9 +251,12 @@ export default function Events() {
                       <span className="text-[red]">*</span>
                     </label>
                     <input
+                      onChange={(e) => setStartDate(e.target.value)}
+                      value={startDate}
                       className="input input-bordered cursor-text rounded-lg w-full"
                       type="date"
                       id="startDay"
+                      required
                     />
                   </div>
                   <div className="flex flex-col w-full max-w-sm">
@@ -270,11 +267,19 @@ export default function Events() {
                       Ngày kết thúc
                     </label>
                     <input
+                      onChange={(e) => setEndDate(e.target.value)}
+                      value={endDate}
                       className="input input-bordered cursor-text rounded-lg w-full"
                       type="date"
                       id="endDay"
+                      required
                     />
                   </div>
+                  {errMess && (
+                    <span className="absolute -bottom-7 text-red-500">
+                      {errMess}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -282,7 +287,7 @@ export default function Events() {
               <div className="modal-action">
                 <button className="btn">Tạo</button>
               </div>
-            </div>
+            </form>
           </label>
         </label>
 
@@ -291,18 +296,21 @@ export default function Events() {
 
         {/* Modal delete event */}
         <input type="checkbox" id="input_del-ev" className="modal-toggle" />
-        <label htmlFor="input_del-ev" className="modal">
+        <label htmlFor="input_del-ev" className="modal" ref={closePopupDelEv}>
           <div className="w-[30rem]">
+            {/* Wrapper for content */}
             <div className="modal-box max-w-none">
-              {/* Wrapper for content */}
               {/* Title */}
               <h3 className="text-2xl font-semibold pb-4 mb-5 text-center">
-                Bạn có chắc chắn xóa event ... ?
+                Bạn có chắc chắn xóa event {currentEv} ?
               </h3>
 
               {/* Wrapper for accept or cancel */}
               <div className="flex justify-center items-center gap-6">
-                <button className="btn min-w-[10rem] btn-error text-white">
+                <button
+                  className="btn min-w-[10rem] btn-error text-white"
+                  onClick={delEv}
+                >
                   Xóa
                 </button>
                 <label htmlFor="input_del-ev" className="btn min-w-[10rem]">

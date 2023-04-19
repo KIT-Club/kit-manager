@@ -1,7 +1,7 @@
 import { api } from "../core/axios";
 
-export const getAllRoles = async () => {
-  const response = await api.get("/roles");
+export const getAllRoles = async (params: any) => {
+  const response = await api.get("/roles", params);
   return response.data;
 };
 

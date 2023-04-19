@@ -1,7 +1,15 @@
+import Header from "../components/header";
 export default function PageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <div className="p-4 max-w-7xl mx-auto" style={{ minHeight: "100vh" }}>
+        <Header />
+        {children}
+      </div>
+    </>
+  );
 }
