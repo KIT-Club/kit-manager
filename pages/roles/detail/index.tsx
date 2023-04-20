@@ -1,67 +1,45 @@
-/* eslint-disable react/jsx-key */
-export default function DetailsRole() {
-  const fakeUser = [
-    {
-      id: 0,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 1,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 2,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 3,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 4,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 5,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 6,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 7,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 8,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-    {
-      id: 9,
-      name: "Nguyen Van A",
-      major: "An toàn thông tin",
-      MSSV: "AT000000",
-    },
-  ];
+import './App.css';
+import {useState,useEffect} from 'react';
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+  
+export default function DetailsRole(){
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RoleTable />
+    </QueryClientProvider>
+  )
+}
+
+
+function RoleTable() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { isFetching, error, data, refetch } = useQuery({
+    queryKey: ['repoData', currentPage],
+    queryFn: () =>
+      fetch(`https://kit.ngosangns.com/api/users?page=${currentPage}`).then(
+        (res) => res.json(),
+      ),
+  });
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+
+  useEffect(() => {
+    refetch();
+  }, [currentPage, refetch]);
+
+  if (isFetching) return 'Loading...'
+
+  if (error) return 'An error has occurred: ' + error.message
   return (
     <section id="detais_member_role" data-theme="dark">
       <div className="detais_member_rolecontainer mx-auto py-5">
@@ -82,28 +60,36 @@ export default function DetailsRole() {
               </tr>
             </thead>
             <tbody id="listingTable">
-              {fakeUser.map((el, index) => {
-                return (
-                  <tr>
-                    <td>{el.MSSV}</td>
-                    <td>{el.name}</td>
-                    <td>{el.major}</td>
-                  </tr>
-                );
-              })}
+              {data.data.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.username}</td>
+                  <td>{item.name}</td>
+                  <td>{item.major}</td>
+                </tr>
+                ))}
             </tbody>
           </table>
         </div>
         <div className="pangation_member_role flex my-3">
           <div className="mx-auto">
             <div className="btn-group col mx-auto my-5">
-              <button className="btn" id="btn_prev">
+              <button className="btn" id="btn_prev" onClick={() => handlePageClick(currentPage - 1)}>
                 Prev Page
               </button>
-              <button className="btn btn-active">1</button>
-              <button className="btn">2</button>
-              <button className="btn">3</button>
-              <button className="btn" id="btn_next">
+              <button className={`btn ${currentPage === 1 ? 'btn-active' : ''}`} onClick={() => handlePageClick(1)}>
+                1
+              </button>
+              <button className={`btn ${currentPage === 2 ? 'btn-active' : ''}`} onClick={() => handlePageClick(2)}>
+                2
+              </button>
+              <button className={`btn ${currentPage === 3 ? 'btn-active' : ''}`} onClick={() => handlePageClick(3)}>
+                3
+              </button>
+              <button className="btn" id="btn_next" 
+                onClick={() => {
+                  handlePageClick(currentPage + 1)
+                }}
+              >
                 Next Page
               </button>
             </div>
@@ -113,3 +99,4 @@ export default function DetailsRole() {
     </section>
   );
 }
+
