@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 // import { useQuery } from "@tanstack/react-query";
-import { getAllCommittees } from "../../repositories/Commitee.repository";
+import { getAllCommittees, deleteCommittee } from "../../repositories/Commitee.repository";
 import CommitteeTable from "./CommitteeTable";
+import Pagination from "../../components/pagination";
 import styles from "./committee-table.module.css";
 import { useState, useEffect } from "react";
 
@@ -16,7 +18,7 @@ export default function CommitteeTablePage() {
   const [err, setErr] = useState<string>("");
   const [committees, setCommittees] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [lastPage, setLastPage] = useState<number>(1);
+  const [APIData, setAPIData] = useState({});
 
   const getData = async () => {
     try {
@@ -24,7 +26,7 @@ export default function CommitteeTablePage() {
       const data = await getAllCommittees({
         page: currentPage,
       });
-      setLastPage(data.last_page);
+      setAPIData(data);
       setCommittees(data.data);
     } catch (err: any) {
       setErr(err.message);
@@ -33,12 +35,8 @@ export default function CommitteeTablePage() {
     }
   };
 
-  const prevPage = () => {
-    setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-  };
-
-  const nextPage = () => {
-    setCurrentPage(currentPage + 1);
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   useEffect(() => {
@@ -54,15 +52,15 @@ export default function CommitteeTablePage() {
       return <div>{err}</div>;
     }
 
-    if (committees.length > 0) {
+    if (committees) {
       return (
         <>
-          <CommitteeTable committees={committees} styles={styles} />
+          <CommitteeTable committees={committees} styles={styles} deleteCommittee={deleteCommittee}/>
         </>
       );
     }
 
-    if (committees.length === 0) {
+    if (!committees) {
       return <div>Không có dữ liệu</div>;
     }
   };
@@ -76,21 +74,8 @@ export default function CommitteeTablePage() {
       </header>
       <section className={styles["table-wrapper"]}>
         {renderTable()}
-        <div className={`btn-group ${styles.pagnitation}`}>
-          {/*btn-group is DasyUI class} */}
-          <button className="btn pagnitation-button" onClick={prevPage}>
-            «
-          </button>
-          <button className="btn pagnitation-button" disabled>
-            Page {currentPage}
-          </button>
-          <button
-            className="btn pagnitation-button"
-            onClick={nextPage}
-            disabled={currentPage == lastPage ? true : false}
-          >
-            »
-          </button>
+        <div className="flex justify-center my-5">
+          <Pagination data={APIData} onPageChange={onPageChange} />
         </div>
       </section>
     </>

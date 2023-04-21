@@ -1,10 +1,11 @@
 .table-wrapper {
-  padding-bottom: 1rem; /*make table wrap pagnitation*/
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+  flex-wrap: wrap;
 }
 
 .table-normal {
-  position: relative;
-  margin-bottom: 10rem; /*make table wrap pagnitation*/
   width: 100%;
   text-align: center;
   white-space: nowrap;
@@ -18,39 +19,21 @@
   padding: 1.5rem;
 }
 
-
-
 .head-row {
   background-color: #28282b84;
 }
 /* Buttons styling*/
 
 .action-btn {
-  margin: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   width: 5rem;
+  height: 2rem;
 }
 
 .add-committee-btn {
-  box-sizing: border-box;
   width: 10rem;
   margin: 2rem auto 4rem 2rem;
 }
 
-.pagnitation {
-  position: absolute;
-  bottom: -20%;
-  left: 45%;
-  white-space: nowrap;
-}
 
-/* make pagnitation bottom center*/
-@media (max-width: 991.98px) {
-  .pagnitation {
-    left: 39%;
-  }
-}  
-
-
-.pagnitation-button {
-  margin: 0;
-}

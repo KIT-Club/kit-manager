@@ -3,9 +3,11 @@ import React from "react";
 function CommitteeTable({
   committees,
   styles,
+  deleteCommittee,
 }: {
   committees: Array<any>;
   styles: any;
+  deleteCommittee: (id: number) => any;
 }) {
   return (
     <>
@@ -13,7 +15,7 @@ function CommitteeTable({
         {/* head */}
         <thead>
           <tr className={styles["head-row"]}>
-            <th className={styles["table-cell"]}></th>
+            <th className={styles["table-cell"]}>STT</th>
             <th className={styles["table-cell"]}>Tên ban</th>
             <th className={styles["table-cell"]}>Số lượng thuộc ban</th>
             <th className={styles["table-cell"]}>Hành động</th>
@@ -39,13 +41,26 @@ function CommitteeTable({
                 <td className={styles["table-cell"]}>
                   <div className={styles["button-container"]}>
                     <button
-                      className={`btn btn-success ${styles["action-btn"]}`}
+                      className={`btn btn-sm bg-cyan-500 text-white mr-1
+                      ${styles["action-btn"]}`}
                     >
                       Update
                     </button>
-                    <button className={`btn btn-error ${styles["action-btn"]}`}>
-                      Delete
-                    </button>
+                    <div className="dropdown ">
+                      <button
+                        className={`btn btn-ghost btn-xs ${styles["action-btn"]}`}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        tabIndex={0}
+                        className="btn btn-error dropdown-content menu p-2 shadow
+                         text-slate-600 rounded-box"
+                        onClick={() => deleteCommittee(id)}
+                      >
+                        chắc chắn xóa ?
+                      </button>
+                    </div>
                   </div>
                 </td>
               </tr>
