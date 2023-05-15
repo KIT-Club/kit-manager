@@ -31,14 +31,11 @@ function App() {
         page: currentPage,
         limit: currentLimit,
       }),
-    enabled: false,
   });
 
   useEffect(() => {
-    return () => {
-      refetch();
-    };
-  }, []);
+    refetch();
+  }, [currentPage]);
 
   // --- Delete user
   const [deleteUserId, setDeleteUserId] = useState(0);
