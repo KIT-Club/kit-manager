@@ -39,7 +39,7 @@ export default function Header() {
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">KIT Manager</span>
             <Image
-              className="w-auto rounded-lg"
+              className="w-12 rounded-lg"
               src="/kit-logo.png"
               alt=""
               width={32}
