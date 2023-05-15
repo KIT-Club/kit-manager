@@ -1,5 +1,3 @@
-import React from "react";
-
 function CommitteeTable({
   committees,
   styles,
@@ -54,8 +52,7 @@ function CommitteeTable({
                       </button>
                       <button
                         tabIndex={0}
-                        className="btn btn-error dropdown-content menu p-2 shadow
-                         text-slate-600 rounded-box"
+                        className="btn btn-error dropdown-content menu p-2 shadow text-slate-600 rounded-box"
                         onClick={() => deleteCommittee(id)}
                       >
                         chắc chắn xóa ?
