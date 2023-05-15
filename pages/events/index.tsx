@@ -5,6 +5,7 @@ import {
   deleteEvent,
   createEvent,
 } from "../../repositories/Event.repository";
+import Pagination from "../../components/pagination";
 
 export default function Events() {
   interface evData {
@@ -16,38 +17,47 @@ export default function Events() {
     users: [];
   }
 
-  // State
-  const [currentEv, setCurrentEv] = useState(0);
+  // Function
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const resetCreateEvForm = () => {
+    setTitle("");
+    setDesciption("");
+    setStartDate("");
+    setEndDate("");
+    setErrMess("");
+    closePopupCreateEv.current?.click();
+  };
+
+  // --- fetch data
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(1);
   const [evData, setEvData] = useState<Array<evData>>([]);
+  const [APIData, setAPIData] = useState({});
 
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
-  const [errMess, setErrMess] = useState("");
 
-  const [title, setTitle] = useState("");
-  const [description, setDesciption] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-  // Ref
-  const closePopupDelEv = useRef<HTMLLabelElement>(null);
-  const closePopupCreateEv = useRef<HTMLLabelElement>(null);
-
-  // Function
   const getData = async () => {
     try {
       setLoading(true);
       const events = await getAllEvents({ page: currentPage });
       setEvData(events.data);
-      setMaxPage(events.last_page);
+      setAPIData(events);
     } catch (err: any) {
       setErr(err.message);
     } finally {
       setLoading(false);
     }
   };
+  // ---
+
+  // --- delete event
+  const [errMess, setErrMess] = useState("");
+  const [currentEv, setCurrentEv] = useState(0);
+
+  const closePopupDelEv = useRef<HTMLLabelElement>(null);
 
   const delEv = async () => {
     try {
@@ -58,6 +68,15 @@ export default function Events() {
       setErr(err.message);
     }
   };
+  // ---
+
+  // --- create event
+  const [title, setTitle] = useState("");
+  const [description, setDesciption] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const closePopupCreateEv = useRef<HTMLLabelElement>(null);
 
   const postEv = async (e: any) => {
     e.preventDefault();
@@ -77,20 +96,23 @@ export default function Events() {
       setErrMess(err.response.data.error);
     }
   };
+  // ---
 
   const renderTable = () => {
     if (loading) {
       return (
-        <div className="flex items-center justify-center min-h-[3rem]">
-          <div
-            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status"
-          >
-            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-              Loading...
-            </span>
+        <>
+          <div className="flex items-center justify-center min-h-[3rem]">
+            <div
+              className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+              role="status"
+            >
+              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                Loading...
+              </span>
+            </div>
           </div>
-        </div>
+        </>
       );
     }
 
@@ -101,50 +123,54 @@ export default function Events() {
     if (evData.length > 0) {
       return (
         <>
-          <table className="table table-compact w-full">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Tên event</th>
-                <th>Mô tả</th>
-                <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {evData.map((data, key) => {
-                return (
-                  <tr className="relative align-top" key={key}>
-                    <td>{key + 1}</td>
-                    <td>{data.name}</td>
-                    <td>{data.description}</td>
-                    <td>{data.start_date}</td>
-                    <td>{data.end_date}</td>
-                    <td className="relative z-50">
-                      <Link href={`/events/${data.id}/update`}>
-                        <button className="btn btn-success mr-4">Update</button>
-                      </Link>
-                      <label
-                        htmlFor="input_del-ev"
-                        className="btn btn-error"
-                        onClick={() => setCurrentEv(data.id)}
-                      >
-                        Delete
-                      </label>
-                    </td>
+          <div className="overflow-x-auto w-full mb-6">
+            <table className="table table-compact w-full">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Tên event</th>
+                  <th>Mô tả</th>
+                  <th>Ngày bắt đầu</th>
+                  <th>Ngày kết thúc</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {evData.map((data, key) => {
+                  return (
+                    <tr className="relative align-top" key={key}>
+                      <td>{key + 1}</td>
+                      <td>{data.name}</td>
+                      <td>{data.description}</td>
+                      <td>{data.start_date}</td>
+                      <td>{data.end_date}</td>
+                      <td className="relative z-10">
+                        <Link href={`/events/${data.id}/update`}>
+                          <button className="btn btn-success mr-4">
+                            Update
+                          </button>
+                        </Link>
+                        <label
+                          htmlFor="input_del-ev"
+                          className="btn btn-error"
+                          onClick={() => setCurrentEv(data.id)}
+                        >
+                          Delete
+                        </label>
+                      </td>
 
-                    <td className="absolute inset-0 bg-transparent">
-                      <Link
-                        className="absolute inset-0"
-                        href={`/events/${data.id}`}
-                      ></Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      <td className="absolute inset-0 bg-transparent">
+                        <Link
+                          className="absolute inset-0"
+                          href={`/events/${data.id}`}
+                        ></Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </>
       );
     }
@@ -154,40 +180,9 @@ export default function Events() {
     }
   };
 
-  const nextPage = () => {
-    setCurrentPage(currentPage + 1 > maxPage ? 1 : currentPage + 1);
-  };
-
-  const prevPage = () => {
-    setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-  };
-
-  const resetCreateEvForm = () => {
-    setTitle("");
-    setDesciption("");
-    setStartDate("");
-    setEndDate("");
-    setErrMess("");
-    closePopupCreateEv.current?.click();
-  };
-
-  // Hooks
-  useEffect(() => {
-    getData();
-  }, [currentPage]);
-
-  return (
-    <div className="m-5">
-      <div className="mx-auto my-0 w-[68.75rem]">
-        {/* add event btn */}
-        <label
-          htmlFor="input_add-ev"
-          className="btn w-36 mb-4 mr-3 float-right"
-        >
-          Thêm event
-        </label>
-
-        {/* Modal add event */}
+  const addEventPopupEl = () => {
+    return (
+      <>
         <input type="checkbox" id="input_add-ev" className="modal-toggle" />
         <label
           htmlFor="input_add-ev"
@@ -290,11 +285,13 @@ export default function Events() {
             </form>
           </label>
         </label>
+      </>
+    );
+  };
 
-        {/* table event */}
-        <div className="overflow-x-auto w-full mb-6">{renderTable()}</div>
-
-        {/* Modal delete event */}
+  const delEventPopupEl = () => {
+    return (
+      <>
         <input type="checkbox" id="input_del-ev" className="modal-toggle" />
         <label htmlFor="input_del-ev" className="modal" ref={closePopupDelEv}>
           <div className="w-[30rem]">
@@ -320,20 +317,38 @@ export default function Events() {
             </div>
           </div>
         </label>
+      </>
+    );
+  };
 
-        {/* Navigation */}
-        <div className="flex justify-center items-center">
-          <div className="btn-group">
-            <button className="btn" onClick={prevPage}>
-              «
-            </button>
-            <button className="btn pointer-events-none">
-              Page {currentPage}
-            </button>
-            <button className="btn" onClick={nextPage}>
-              »
-            </button>
-          </div>
+  // Hooks
+  useEffect(() => {
+    getData();
+  }, [currentPage]);
+
+  return (
+    <div className="m-5">
+      <div className="mx-auto my-0 w-[68.75rem]">
+        {/* add event btn */}
+        <label
+          htmlFor="input_add-ev"
+          className="btn w-36 mb-4 mr-3 float-right"
+        >
+          Thêm event
+        </label>
+
+        {/* Modal add event */}
+        {addEventPopupEl()}
+
+        {/* table event */}
+        {renderTable()}
+
+        {/* Modal delete event */}
+        {delEventPopupEl()}
+
+        {/* Pagination */}
+        <div className="flex justify-center">
+          <Pagination data={APIData} onPageChange={onPageChange} />
         </div>
       </div>
     </div>
