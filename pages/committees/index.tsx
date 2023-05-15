@@ -1,5 +1,9 @@
+/* eslint-disable prettier/prettier */
 // import { useQuery } from "@tanstack/react-query";
-import { getAllCommittees } from "../../repositories/Commitee.repository";
+import { getAllCommittees, deleteCommittee } from "../../repositories/Commitee.repository";
+import CommitteeTable from "./CommitteeTable";
+import Pagination from "../../components/pagination";
+import styles from "./committee-table.module.css";
 import { useState, useEffect } from "react";
 
 // const useCommittee = () => {
@@ -14,6 +18,7 @@ export default function CommitteeTablePage() {
   const [err, setErr] = useState<string>("");
   const [committees, setCommittees] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [APIData, setAPIData] = useState({});
 
   const getData = async () => {
     try {
@@ -21,6 +26,7 @@ export default function CommitteeTablePage() {
       const data = await getAllCommittees({
         page: currentPage,
       });
+      setAPIData(data);
       setCommittees(data.data);
     } catch (err: any) {
       setErr(err.message);
@@ -29,12 +35,8 @@ export default function CommitteeTablePage() {
     }
   };
 
-  const prevPage = () => {
-    setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-  };
-
-  const nextPage = () => {
-    setCurrentPage(currentPage + 1);
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   useEffect(() => {
@@ -50,55 +52,32 @@ export default function CommitteeTablePage() {
       return <div>{err}</div>;
     }
 
-    if (committees.length > 0) {
+    if (committees) {
       return (
         <>
-          <table>
-            <thead>
-              <tr>
-                <th className="text-left">Id</th>
-                <th className="text-left">Name</th>
-                <th className="text-left">Created at</th>
-                <td className="text-right">Actions</td>
-              </tr>
-            </thead>
-            <tbody>
-              {committees.map((committee) => (
-                <tr key={committee.id}>
-                  <td>{committee.id}</td>
-                  <td>{committee.name}</td>
-                  <td>{committee.created_at}</td>
-                  <td>
-                    <button className="btn">Update</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <CommitteeTable committees={committees} styles={styles} deleteCommittee={deleteCommittee}/>
         </>
       );
     }
 
-    if (committees.length === 0) {
+    if (!committees) {
       return <div>Không có dữ liệu</div>;
     }
   };
 
   return (
     <>
-      <button className="btn">Create +</button>
-      {renderTable()}
-      <div>
-        <button className="btn" onClick={prevPage}>
-          Trang trước
+      <header>
+        <button className={`btn btn-outline ${styles["add-committee-btn"]}`}>
+          <b>+ Thêm ban</b>
         </button>
-        <button className="text-white inline-block ml-2 mr-2" disabled>
-          Trang hiện tại: {currentPage}
-        </button>
-        <button className="btn" onClick={nextPage}>
-          Trang sau
-        </button>
-      </div>
+      </header>
+      <section className={styles["table-wrapper"]}>
+        {renderTable()}
+        <div className="flex justify-center my-5">
+          <Pagination data={APIData} onPageChange={onPageChange} />
+        </div>
+      </section>
     </>
   );
 }
