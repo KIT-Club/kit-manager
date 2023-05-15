@@ -46,6 +46,7 @@ jobs:
         run: npm run build && npm run export
         env:
           NODE_ENV: production
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
 
       - name: Zip code
         run: cd out && zip -qr $ZIP_FILE . && mv $ZIP_FILE ~
