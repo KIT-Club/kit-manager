@@ -1,9 +1,9 @@
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import { createRef, RefObject, useEffect, useState } from "react";
-import { parseJwt } from "../../service/Index.service";
-// import { tokenCalendar } from "../../repositories/Calendar.repository";
+import { tokenCalendar } from "../../repositories/Calendar.repository";
+import LocalStorageService from "../../service/LocalStorage.service";
 
 const calendarRef: RefObject<FullCalendar> = createRef();
 
@@ -40,20 +40,21 @@ export default function CalendarIndex() {
 
   useEffect(() => {
     setToken(localStorage.getItem("token"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (token) handleFetchCalendar();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (token) {
+      (async () => {
+        console.log(token);
+        try {
+          const res = await tokenCalendar(token || "");
+          LocalStorageService.set("tokenCalender", res.request);
+        } catch {
+          console.log("Có lỗi xảy ra");
+        }
+      })();
+    }
   }, [token]);
-
-  const handleFetchCalendar = async () => {
-    // const tokenData = parseJwt(
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-    // );
-    // await tokenCalendar(tokenData);
-  };
 
   return (
     <>
