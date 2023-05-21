@@ -3,11 +3,11 @@ import React from "react";
 function CommitteeTable({
   committees,
   styles,
-  deleteCommittee,
+  deleteCommitteeFunc,
 }: {
   committees: Array<any>;
   styles: any;
-  deleteCommittee: (id: number) => any;
+  deleteCommitteeFunc: (id: number) => any;
 }) {
   return (
     <>
@@ -56,7 +56,7 @@ function CommitteeTable({
                         tabIndex={0}
                         className="btn btn-error dropdown-content menu p-2 shadow
                          text-slate-600 rounded-box"
-                        onClick={() => deleteCommittee(id)}
+                        onClick={() => deleteCommitteeFunc(id)}
                       >
                         chắc chắn xóa ?
                       </button>
