@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Pagination from "../../components/pagination";
+import Pagination from "@/components/Pagination";
 
 import {
   QueryClient,

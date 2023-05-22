@@ -4,8 +4,8 @@ import {
   getAllEvents,
   deleteEvent,
   createEvent,
-} from "../../repositories/Event.repository";
-import Pagination from "../../components/pagination";
+} from "@/repositories/Event.repository";
+import Pagination from "@/components/Pagination";
 
 export default function Events() {
   interface evData {
@@ -85,7 +85,7 @@ export default function Events() {
       description: description,
       start_date: startDate,
       end_date: endDate,
-      user_ids: [1], // Hiện tại miêu tả của thêm event trong trello thiếu mất phần thêm user
+      user_ids: [],
     };
 
     try {
@@ -123,16 +123,15 @@ export default function Events() {
     if (evData.length > 0) {
       return (
         <>
-          <div className="overflow-x-auto w-full mb-6">
-            <table className="table table-compact w-full">
+          <div className="w-full mb-4">
+            <table className="table w-full">
               <thead>
                 <tr>
-                  <th></th>
+                  <th>ID</th>
                   <th>Tên event</th>
-                  <th>Mô tả</th>
                   <th>Ngày bắt đầu</th>
                   <th>Ngày kết thúc</th>
-                  <th></th>
+                  <th>Hành động</th>
                 </tr>
               </thead>
               <tbody>
@@ -141,35 +140,31 @@ export default function Events() {
                     <tr className="relative align-top" key={key}>
                       <td>{key + 1}</td>
                       <td>{data.name}</td>
-                      <td>{data.description}</td>
                       <td>{data.start_date}</td>
-                      <td>{data.end_date}</td>
+                      <td>{data.end_date ?? "_"}</td>
                       <td className="relative">
                         <Link href={`/events/${data.id}/update`}>
-                          <button className="btn btn-success mr-4">
-                            Update
+                          <button className="btn btn-sm bg-cyan-500 text-white mr-1">
+                            Cập nhật
                           </button>
                         </Link>
                         <label
                           htmlFor="input_del-ev"
-                          className="btn btn-error"
+                          className="btn btn-sm bg-error-500 text-white mr-1"
                           onClick={() => setCurrentEv(data.id)}
                         >
-                          Delete
+                          Xóa
                         </label>
-                      </td>
-
-                      <td className="absolute inset-0 bg-transparent">
-                        <Link
-                          className="absolute inset-0"
-                          href={`/events/${data.id}`}
-                        ></Link>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+            {/* Pagination */}
+            <div className="mt-4">
+              <Pagination data={APIData} onPageChange={onPageChange} />
+            </div>
           </div>
         </>
       );
@@ -327,13 +322,10 @@ export default function Events() {
   }, [currentPage]);
 
   return (
-    <div className="m-5">
-      <div className="mx-auto my-0 w-[68.75rem]">
+    <div>
+      <div className="my-0 w-full">
         {/* add event btn */}
-        <label
-          htmlFor="input_add-ev"
-          className="btn w-36 mb-4 mr-3 float-right"
-        >
+        <label htmlFor="input_add-ev" className="btn w-36 mb-4 mr-3">
           Thêm event
         </label>
 
@@ -345,11 +337,6 @@ export default function Events() {
 
         {/* Modal delete event */}
         {delEventPopupEl()}
-
-        {/* Pagination */}
-        <div className="flex justify-center">
-          <Pagination data={APIData} onPageChange={onPageChange} />
-        </div>
       </div>
     </div>
   );

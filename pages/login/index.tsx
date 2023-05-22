@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import styles from "./index.module.css";
-import { login } from "../../repositories/User.repository";
-import ErrorAlert from "../alert/error";
+import { login } from "@/repositories/User.repository";
+import ErrorAlert from "@/components/alert/Error";
 import { useRouter } from "next/router";
-import localStorageService from "../../service/LocalStorage.service";
+import localStorageService from "@/service/LocalStorage.service";
 
 export default function Login() {
   const router = useRouter();

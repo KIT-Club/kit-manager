@@ -7,6 +7,11 @@ import Link from "next/link";
 
 const products = [
   {
+    name: "Calendar",
+    href: "/calendar",
+    icon: SquaresPlusIcon,
+  },
+  {
     name: "User",
     href: "/users",
     icon: SquaresPlusIcon,

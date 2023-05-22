@@ -2,8 +2,8 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import { createRef, RefObject, useEffect, useState } from "react";
-import { tokenCalendar } from "../../repositories/Calendar.repository";
-import LocalStorageService from "../../service/LocalStorage.service";
+import { tokenCalendar } from "@/repositories/Calendar.repository";
+import LocalStorageService from "@/service/LocalStorage.service";
 
 const calendarRef: RefObject<FullCalendar> = createRef();
 

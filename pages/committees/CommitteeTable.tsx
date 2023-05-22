@@ -1,25 +1,29 @@
+import Pagination from "@/components/Pagination";
+
 function CommitteeTable({
   committees,
-  styles,
   deleteCommitteeFunc,
+  data,
+  onPageChange,
 }: {
   committees: Array<any>;
-  styles: any;
   deleteCommitteeFunc: (id: number) => any;
+  data: any;
+  onPageChange: any;
 }) {
   return (
     <>
-      <table className={`${styles["table-normal"]} ${styles["w-full"]}`}>
+      <table className={`table w-full mt-4`}>
         {/* head */}
         <thead>
-          <tr className={styles["head-row"]}>
-            <th className={styles["table-cell"]}>STT</th>
-            <th className={styles["table-cell"]}>Tên ban</th>
-            <th className={styles["table-cell"]}>Số lượng thuộc ban</th>
-            <th className={styles["table-cell"]}>Hành động</th>
+          <tr>
+            <th>STT</th>
+            <th>Tên ban</th>
+            <th>Số thành viên</th>
+            <th>Hành động</th>
           </tr>
         </thead>
-        <tbody className={styles["table-body"]}>
+        <tbody>
           {committees.map((committee) => {
             const {
               id,
@@ -32,31 +36,30 @@ function CommitteeTable({
             } = committee;
 
             return (
-              <tr key={id} className={styles["table-cell"]}>
-                <th className={styles["table-cell"]}>{id}</th>
-                <td className={styles["table-cell"]}>{name}</td>
-                <td className={styles["table-cell"]}>{created_at}</td>
-                <td className={styles["table-cell"]}>
-                  <div className={styles["button-container"]}>
+              <tr key={id}>
+                <th>{id}</th>
+                <td>{name}</td>
+                <td>{0}</td>
+                <td>
+                  <div>
                     <button
-                      className={`btn btn-sm bg-cyan-500 text-white mr-1
-                      ${styles["action-btn"]}`}
+                      className={`btn btn-sm bg-cyan-500 text-white mr-1`}
                     >
-                      Update
+                      Cập nhật
                     </button>
                     <div className="dropdown ">
                       <button
-                        className={`btn btn-ghost btn-xs ${styles["action-btn"]}`}
+                        className={`btn btn-sm bg-error-500 text-white mr-1`}
                       >
-                        Delete
+                        Xóa
                       </button>
                       <button
                         tabIndex={0}
                         className="btn btn-error dropdown-content menu p-2 shadow
-                         text-slate-600 rounded-box"
+                         text-white rounded-box"
                         onClick={() => deleteCommitteeFunc(id)}
                       >
-                        chắc chắn xóa ?
+                        Chắc chắn xóa!
                       </button>
                     </div>
                   </div>
@@ -66,6 +69,9 @@ function CommitteeTable({
           })}
         </tbody>
       </table>
+      <div className="mt-4">
+        <Pagination data={data} onPageChange={onPageChange} />
+      </div>
     </>
   );
 }
