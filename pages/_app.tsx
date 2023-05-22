@@ -5,6 +5,7 @@ import createQueryClient from "../core/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import LoginLayout from "../layouts/Login.layout";
 import PageLayout from "../layouts/Page.layout";
+import NoSSR from "react-no-ssr";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -21,19 +22,23 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (router.pathname === "/login") {
     return (
-      <QueryClientProvider client={queryClient}>
-        <LoginLayout>
-          <Component {...pageProps} />
-        </LoginLayout>
-      </QueryClientProvider>
+      <NoSSR>
+        <QueryClientProvider client={queryClient}>
+          <LoginLayout>
+            <Component {...pageProps} />
+          </LoginLayout>
+        </QueryClientProvider>
+      </NoSSR>
     );
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <PageLayout>
-        <Component {...pageProps} />
-      </PageLayout>
-    </QueryClientProvider>
+    <NoSSR>
+      <QueryClientProvider client={queryClient}>
+        <PageLayout>
+          <Component {...pageProps} />
+        </PageLayout>
+      </QueryClientProvider>
+    </NoSSR>
   );
 }

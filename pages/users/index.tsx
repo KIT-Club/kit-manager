@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { getAllCommittees } from "../../repositories/Commitee.repository";
@@ -23,7 +23,7 @@ function App() {
 
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["users", currentPage],
     queryFn: () =>
       getAllUsers({
@@ -32,6 +32,10 @@ function App() {
         limit: currentLimit,
       }),
   });
+
+  useEffect(() => {
+    refetch();
+  }, [currentPage]);
 
   // --- Delete user
   const [deleteUserId, setDeleteUserId] = useState(0);
