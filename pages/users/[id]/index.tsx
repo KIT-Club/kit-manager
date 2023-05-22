@@ -13,7 +13,7 @@ export default function User() {
   const { id } = router.query;
   const parsedId = typeof id === "string" ? parseInt(id, 10) : undefined;
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["users", { id: parsedId }],
     queryFn: () =>
       parsedId
@@ -22,6 +22,10 @@ export default function User() {
           })
         : null,
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   // --- Update user
   const [isUpdateMode, setIsUpdateMode] = useState(false);

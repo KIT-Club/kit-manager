@@ -144,7 +144,7 @@ export default function Events() {
                       <td>{data.description}</td>
                       <td>{data.start_date}</td>
                       <td>{data.end_date}</td>
-                      <td className="relative z-10">
+                      <td className="relative">
                         <Link href={`/events/${data.id}/update`}>
                           <button className="btn btn-success mr-4">
                             Update
