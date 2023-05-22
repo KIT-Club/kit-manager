@@ -1,7 +1,9 @@
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
-import { createRef, RefObject } from "react";
+import FullCalendar from "@fullcalendar/react"; // must go before plugins
+import { createRef, RefObject, useEffect, useState } from "react";
+import { tokenCalendar } from "../../repositories/Calendar.repository";
+import LocalStorageService from "../../service/LocalStorage.service";
 
 const calendarRef: RefObject<FullCalendar> = createRef();
 
@@ -34,6 +36,26 @@ const events = [
 // };
 
 export default function CalendarIndex() {
+  const [token, setToken] = useState<string | null>("");
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      (async () => {
+        console.log(token);
+        try {
+          const res = await tokenCalendar(token || "");
+          LocalStorageService.set("tokenCalender", res.request);
+        } catch {
+          console.log("Có lỗi xảy ra");
+        }
+      })();
+    }
+  }, [token]);
+
   return (
     <>
       {/* <button onClick={someMethod}>Next</button> */}
