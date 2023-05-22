@@ -1,46 +1,35 @@
-import './App.css';
-import {useState,useEffect} from 'react';
-import Pagination from './components/pagination.tsx';
+import { useState, useEffect } from "react";
+import Pagination from "../../components/pagination";
 
 import {
   QueryClient,
   QueryClientProvider,
   useQuery,
-} from '@tanstack/react-query'
+} from "@tanstack/react-query";
 
-const queryClient = new QueryClient()
-
-export default function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RoleTable />
-    </QueryClientProvider>
-  )
-}
-
+const queryClient = new QueryClient();
 
 function RoleTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const { isFetching, error, data, refetch } = useQuery({
-    queryKey: ['repoData', currentPage],
+    queryKey: ["repoData", currentPage],
     queryFn: () =>
       fetch(`https://kit-api.ngosangns.com/api/users?page=${currentPage}`).then(
-        (res) => res.json(),
+        (res) => res.json()
       ),
   });
 
-  const handlePageClick = (pageNumber) => {
+  const onPageChange = (pageNumber: any) => {
     setCurrentPage(pageNumber);
   };
-
 
   useEffect(() => {
     refetch();
   }, [currentPage, refetch]);
 
-  if (isFetching) return 'Loading...'
+  if (isFetching) return "Loading...";
 
-  if (error) return 'An error has occurred: ' + error.message
+  if (error) return "An error has occurred: " + (error as any)?.message;
   return (
     <section id="detais_member_role" data-theme="dark">
       <div className="detais_member_rolecontainer mx-auto py-5">
@@ -61,19 +50,26 @@ function RoleTable() {
               </tr>
             </thead>
             <tbody id="listingTable">
-              {data.data.map((item, index) => (
+              {data.data.map((item: any, index: any) => (
                 <tr key={index}>
                   <td>{item.username}</td>
                   <td>{item.name}</td>
                   <td>{item.major}</td>
                 </tr>
-                ))}
+              ))}
             </tbody>
           </table>
         </div>
-        <Pagination />
+        <Pagination data={data} onPageChange={onPageChange} />
       </div>
     </section>
   );
 }
 
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      {RoleTable()}
+    </QueryClientProvider>
+  );
+}
