@@ -4,36 +4,45 @@ import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
-
-const products = [
-  {
-    name: "Calendar",
-    href: "/calendar",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "User",
-    href: "/users",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Role",
-    href: "/roles",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Event",
-    href: "/events",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Committee",
-    href: "/committees",
-    icon: SquaresPlusIcon,
-  },
-];
+import useUserStore from "@/stores/User.store";
+import { useRouter } from "next/router";
 
 export default function Header() {
+  const products = [
+    {
+      name: "Calendar",
+      href: "/calendar",
+      icon: SquaresPlusIcon,
+    },
+    {
+      name: "User",
+      href: "/users",
+      icon: SquaresPlusIcon,
+    },
+    {
+      name: "Role",
+      href: "/roles",
+      icon: SquaresPlusIcon,
+    },
+    {
+      name: "Event",
+      href: "/events",
+      icon: SquaresPlusIcon,
+    },
+    {
+      name: "Committee",
+      href: "/committees",
+      icon: SquaresPlusIcon,
+    },
+  ];
+  const setToken = useUserStore((state: any) => state.setToken);
+  const router = useRouter();
+  const loginPath = "/login";
+  const remove = (event: any) => {
+    setToken(null);
+    router.push(loginPath);
+  };
+
   return (
     <header>
       <nav
@@ -92,6 +101,20 @@ export default function Header() {
                       </div>
                     </div>
                   ))}
+                  <div className="group relative flex items-center gap-x-6 rounded-lg px-4 py-2 text-sm leading-6">
+                    <div className="flex flex-none items-center justify-center rounded-lg">
+                      <SquaresPlusIcon
+                        className="h-6 w-6 group-hover:text-indigo-600"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div className="flex-auto">
+                      <button onClick={remove} className="block font-semibold">
+                        Đăng xuất
+                        <span className="absolute inset-0" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </Popover.Panel>
             </Transition>
