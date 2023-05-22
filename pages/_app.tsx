@@ -1,43 +1,53 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import createQueryClient from "../core/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import LoginLayout from "../layouts/Login.layout";
 import PageLayout from "../layouts/Page.layout";
 import NoSSR from "react-no-ssr";
+import useUserStore from "@/stores/User.store";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const token = useUserStore((state: any) => state.token);
+  const pathName = usePathname();
+  const loginPath = "/login";
+  const homePath = "/";
   const router = useRouter();
 
-  const queryClientHandlers = {
+  // check token
+  useEffect(() => {
+    if (!token) {
+      if (pathName !== loginPath) router.push(loginPath);
+    } else {
+      if (pathName === loginPath) router.push(homePath);
+    }
+  }, []);
+
+  const queryClient = createQueryClient({
     onError: async (error: any) => {
       if (error?.response?.status === 401) {
-        await router.push("/login");
+        router.push(loginPath);
       }
     },
-  };
+  });
 
-  const queryClient = createQueryClient(queryClientHandlers);
-
-  if (router.pathname === "/login") {
-    return (
-      <NoSSR>
-        <QueryClientProvider client={queryClient}>
-          <LoginLayout>
-            <Component {...pageProps} />
-          </LoginLayout>
-        </QueryClientProvider>
-      </NoSSR>
+  const Layout = (props: any) => {
+    return pathName === loginPath ? (
+      <LoginLayout>{props.children}</LoginLayout>
+    ) : (
+      <PageLayout>{props.children}</PageLayout>
     );
-  }
+  };
 
   return (
     <NoSSR>
       <QueryClientProvider client={queryClient}>
-        <PageLayout>
+        <Layout>
           <Component {...pageProps} />
-        </PageLayout>
+        </Layout>
       </QueryClientProvider>
     </NoSSR>
   );

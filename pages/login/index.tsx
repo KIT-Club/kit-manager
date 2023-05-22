@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 import { login } from "@/repositories/User.repository";
 import ErrorAlert from "@/components/alert/Error";
 import { useRouter } from "next/router";
-import localStorageService from "@/service/LocalStorage.service";
+import useUserStore from "@/stores/User.store";
 
 export default function Login() {
   const router = useRouter();
@@ -12,6 +12,10 @@ export default function Login() {
   const [err, setErr] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { token, setToken } = useUserStore((state: any) => ({
+    token: state.token,
+    setToken: state.setToken,
+  }));
 
   const _login = async (event: any) => {
     try {
@@ -19,7 +23,7 @@ export default function Login() {
       setLoading(true);
       setErr("");
       const res = await login(username, password);
-      localStorageService.set("token", res.token);
+      setToken(res.token);
       router.push("/users");
     } catch (err: any) {
       setErr(err.response?.data?.error ?? "Có lỗi xảy ra");
