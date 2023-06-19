@@ -1,7 +1,9 @@
+import styles from "./Login.module.css";
+
 export default function LoginLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div className={styles["login-layout"]}>{children}</div>;
 }

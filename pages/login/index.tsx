@@ -69,7 +69,6 @@ export default function Login() {
               placeholder="Username"
               type="text"
               className={`${styles["login-input"]}`}
-              required
               value={username}
               onChange={handleUsernameChange}
             />
@@ -80,7 +79,6 @@ export default function Login() {
               placeholder="Password"
               type="password"
               className={`${styles["login-input"]}`}
-              required
               value={password}
               onChange={handlePasswordChange}
             />
