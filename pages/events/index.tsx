@@ -11,9 +11,9 @@ export default function Events() {
   interface evData {
     id: number;
     name: string;
-    description: string;
+    description?: string | null;
     start_date: string;
-    end_date: string;
+    end_date?: string | null;
     users: [];
   }
 
@@ -225,7 +225,6 @@ export default function Events() {
                       type="text"
                       placeholder="Type here"
                       className="input input-bordered w-full"
-                      required
                     />
                   </div>
                 </div>
@@ -262,7 +261,6 @@ export default function Events() {
                       className="input input-bordered cursor-text rounded-lg w-full"
                       type="date"
                       id="endDay"
-                      required
                     />
                   </div>
                   {errMess && (
