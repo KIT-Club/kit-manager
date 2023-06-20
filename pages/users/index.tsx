@@ -31,7 +31,7 @@ const renderTable = ({
             </tr>
           </thead>
           <tbody>
-            {data.data.map((item: any) => {
+            {data?.data?.map((item: any) => {
               return (
                 <tr key={item.id}>
                   <td>

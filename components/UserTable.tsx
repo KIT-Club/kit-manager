@@ -47,9 +47,9 @@ function App({ rowSelection, setRowSelection }: any) {
     }
   );
 
-  useEffect(() => {
-    console.log(table.getRow);
-  }, [rowSelection]);
+  // useEffect(() => {
+  //   console.log(rowSelection);
+  // }, [rowSelection]);
 
   const pagination = useMemo(
     () => ({
@@ -92,6 +92,12 @@ function App({ rowSelection, setRowSelection }: any) {
         footer: (props) => props.column.id,
       },
       {
+        accessorKey: "username",
+        header: () => "MSSV",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
         accessorKey: "roles",
         header: () => "Role",
         cell: (info) => {
@@ -119,6 +125,9 @@ function App({ rowSelection, setRowSelection }: any) {
 
   const table = useReactTable({
     columns,
+    getRowId: (row, relativeIndex) => {
+      return row.id;
+    },
     data: data?.data ?? [],
     pageCount: data?.last_page ?? 0,
     state: {
@@ -153,7 +162,7 @@ function App({ rowSelection, setRowSelection }: any) {
   }
 
   return (
-    <div className="p-2">
+    <div>
       {/* <input
         type="text"
         value={globalFilter ?? ""}
@@ -161,45 +170,43 @@ function App({ rowSelection, setRowSelection }: any) {
         className="input input-bordered"
         placeholder="Tìm tài khoản"
       /> */}
-      <div className="max-h-96 overflow-y-scroll mt-4">
-        <table className="table w-full">
-          <thead className="sticky top-0">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+      <table className="table w-full">
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <th key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </th>
+                );
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
                   return (
-                    <th key={header.id}>
+                    <td key={cell.id}>
                       {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+                        cell.column.columnDef.cell,
+                        cell.getContext()
                       )}
-                    </th>
+                    </td>
                   );
                 })}
               </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => {
-              return (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <TanstackTablePagination table={table} />
-      </div>
+            );
+          })}
+        </tbody>
+      </table>
+      <TanstackTablePagination table={table} />
     </div>
   );
 }

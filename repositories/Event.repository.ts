@@ -5,8 +5,8 @@ export const getAllEvents = async (params: any) => {
   return response.data;
 };
 
-export const getEventById = async (id: number) => {
-  const response = await api.get(`/events/${id}`);
+export const getEventById = async (id: number, params: any) => {
+  const response = await api.get(`/events/${id}`, { params });
   return response.data;
 };
 
@@ -15,7 +15,7 @@ export const createEvent = async (data: any) => {
   return response.data;
 };
 
-export const updateEvent = async (id: number, data: any) => {
+export const updateEvent = async ({ id, data }: { id: number; data: any }) => {
   const response = await api.put(`/events/${id}`, data);
   return response.data;
 };

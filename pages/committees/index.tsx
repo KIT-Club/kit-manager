@@ -121,7 +121,7 @@ export default function CommitteeTablePage() {
                 <label htmlFor="input_committee_name" className="label">
                   <span className="label-text font-semibold text-base">
                     Tên Ban
-                    <span className="text-[red]">*</span>
+                    <span className="text-[red] ml-1">*</span>
                   </span>
                 </label>
                 <input

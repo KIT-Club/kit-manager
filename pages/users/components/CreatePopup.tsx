@@ -92,7 +92,7 @@ function App() {
       <div className="w-[12rem]">
         {committeeData.isLoading && <span>Loading...</span>}
         {!committeeData.isLoading &&
-          committeeData.data.data.map((item: any) => {
+          committeeData?.data?.data?.map((item: any) => {
             return (
               <label
                 key={item.id}
@@ -136,7 +136,7 @@ function App() {
           return (
             <>
               <option>Chọn vai trò</option>
-              {roleData.data.data.map((item: any) => {
+              {roleData?.data?.data?.map((item: any) => {
                 return (
                   <option key={item.id} value={item.id}>
                     {item.name}

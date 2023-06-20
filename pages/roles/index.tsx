@@ -50,7 +50,7 @@ function RoleTable() {
               </tr>
             </thead>
             <tbody id="listingTable">
-              {data.data.map((item: any, index: any) => (
+              {data?.data?.map((item: any, index: any) => (
                 <tr key={index}>
                   <td>{item.username}</td>
                   <td>{item.name}</td>
