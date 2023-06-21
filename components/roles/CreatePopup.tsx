@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { createCommittee } from "@/repositories/Committee.repository";
+import { createRole } from "@/repositories/Role.repository";
 import ErrorAlert from "@/components/alert/Error";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -10,10 +10,10 @@ export default function App() {
   });
   const closePopupCreateEv = useRef<HTMLLabelElement>(null);
 
-  const handleChangeData = (committee: any) => {
+  const handleChangeData = (role: any) => {
     setUpdateData({
       ...updateData,
-      [committee.target.name]: committee.target.value,
+      [role.target.name]: role.target.value,
     });
   };
 
@@ -26,18 +26,18 @@ export default function App() {
 
   const updateUserMutation = useMutation({
     mutationFn: () => {
-      return createCommittee({
+      return createRole({
         ...updateData,
       });
     },
     onSuccess: (_data: any) => {
-      queryClient.invalidateQueries(["committees"]);
+      queryClient.invalidateQueries(["roles"]);
       resetCreateEvForm();
     },
   });
 
-  const handleKeyPress = (committee: any) => {
-    if (committee.key === "Enter") {
+  const handleKeyPress = (role: any) => {
+    if (role.key === "Enter") {
       updateUserMutation.mutate();
     }
   };
@@ -46,7 +46,7 @@ export default function App() {
     <>
       <div className="mb-4">
         <label htmlFor="input_add-ev" className="btn">
-          Thêm ban
+          Thêm vai trò
         </label>
       </div>
       <input type="checkbox" id="input_add-ev" className="modal-toggle" />
@@ -61,13 +61,13 @@ export default function App() {
           >
             <div className="flex flex-col gap-5">
               <h3 className="text-2xl font-semibold pb-4 border-b-2">
-                Tạo ban
+                Tạo vai trò
               </h3>
               <div className="grid gap-4">
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text font-semibold text-base">
-                      Tên ban
+                      Tên vai trò
                       <span className="text-[red] ml-1">*</span>
                     </span>
                   </label>

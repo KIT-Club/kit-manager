@@ -45,7 +45,6 @@ export default function CalendarIndex() {
   useEffect(() => {
     if (token) {
       (async () => {
-        console.log(token);
         try {
           const res = await tokenCalendar(token || "");
           LocalStorageService.set("tokenCalender", res.request);

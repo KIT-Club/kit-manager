@@ -20,7 +20,7 @@ export default function Header() {
       icon: SquaresPlusIcon,
     },
     {
-      name: "Role",
+      name: "Vai trò",
       href: "/roles",
       icon: SquaresPlusIcon,
     },
