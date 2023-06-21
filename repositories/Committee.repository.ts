@@ -5,8 +5,8 @@ export const getAllCommittees = async (params: any) => {
   return response.data;
 };
 
-export const getCommitteeById = async (id: number) => {
-  const response = await api.get(`/committees/${id}`);
+export const getCommitteeById = async (id: number, params: any) => {
+  const response = await api.get(`/committees/${id}`, { params });
   return response.data;
 };
 
@@ -15,8 +15,14 @@ export const createCommittee = async (committee: any) => {
   return response.data;
 };
 
-export const updateCommittee = async (id: number, committee: any) => {
-  const response = await api.put(`/committees/${id}`, committee);
+export const updateCommittee = async ({
+  id,
+  data,
+}: {
+  id: number;
+  data: any;
+}) => {
+  const response = await api.put(`/committees/${id}`, data);
   return response.data;
 };
 

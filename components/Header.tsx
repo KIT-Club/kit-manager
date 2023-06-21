@@ -10,12 +10,12 @@ import { useRouter } from "next/router";
 export default function Header() {
   const products = [
     {
-      name: "Calendar",
+      name: "Lịch",
       href: "/calendar",
       icon: SquaresPlusIcon,
     },
     {
-      name: "User",
+      name: "Người dùng",
       href: "/users",
       icon: SquaresPlusIcon,
     },
@@ -25,12 +25,12 @@ export default function Header() {
       icon: SquaresPlusIcon,
     },
     {
-      name: "Event",
+      name: "Sự kiện",
       href: "/events",
       icon: SquaresPlusIcon,
     },
     {
-      name: "Committee",
+      name: "Ban",
       href: "/committees",
       icon: SquaresPlusIcon,
     },
@@ -80,12 +80,12 @@ export default function Header() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 overflow-hidden rounded-3xl bg-black shadow-lg ring-1 ring-gray-900/5">
+              <Popover.Panel className="absolute right-0 top-full z-10 mt-3 overflow-hidden rounded-3xl bg-neutral shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {products.map((item) => (
                     <div
                       key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg px-4 py-2 text-sm leading-6"
+                      className="group relative flex items-center gap-x-6 rounded-lg px-4 py-2 text-sm leading-6 whitespace-nowrap"
                     >
                       <div className="flex flex-none items-center justify-center rounded-lg">
                         <item.icon

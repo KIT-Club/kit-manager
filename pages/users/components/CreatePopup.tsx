@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getAllCommittees } from "@/repositories/Commitee.repository";
+import { getAllCommittees } from "@/repositories/Committee.repository";
 import { getAllRoles } from "@/repositories/Role.repository";
 import ErrorAlert from "@/components/alert/Error";
 import { addUser } from "@/repositories/User.repository";
