@@ -64,7 +64,7 @@ export default function Header() {
         <Popover.Group className="flex gap-x-12">
           <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6">
-              Member
+              Menu
               <ChevronDownIcon
                 className="h-5 w-5 flex-none"
                 aria-hidden="true"

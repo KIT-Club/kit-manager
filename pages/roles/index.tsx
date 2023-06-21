@@ -1,22 +1,11 @@
 import { useState, useEffect } from "react";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
-import {
-  getAllRoles,
-  createRole,
-  deleteRole,
-} from "@/repositories/Role.repository";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAllRoles, deleteRole } from "@/repositories/Role.repository";
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 import CreatePopup from "@/components/roles/CreatePopup";
 import ErrorAlert from "@/components/alert/Error";
-
-const queryClient = new QueryClient();
 
 function TableRole() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +34,6 @@ function TableRole() {
   const queryClient = useQueryClient();
 
   const [num, setNum] = useState(0);
-  const [count, setCount] = useState(0);
 
   const handleDelete = async (id: any) => {
     try {
@@ -58,21 +46,6 @@ function TableRole() {
     }
   };
 
-  const handleAdd = async (value: string) => {
-    try {
-      await createRole({
-        name: value,
-      });
-      setCount(0);
-      queryClient.invalidateQueries({ queryKey: ["roles"] });
-      refetch();
-    } catch (err) {
-      alert("Đã xảy ra lỗi");
-    }
-  };
-
-  const [valueRole, setValueRole] = useState("");
-
   const showBtn = () => {
     if (num === 0) {
       setNum(1);
@@ -83,13 +56,13 @@ function TableRole() {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   if (error) {
     if (typeof error === "object" && "message" in error) {
-      console.log(error.message);
+      return <ErrorAlert msg={(error as any).message} />;
     } else {
-      console.log("An error has occurred");
+      return <ErrorAlert msg={"An error has occurred"} />;
     }
   }
 
