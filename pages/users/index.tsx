@@ -99,7 +99,7 @@ const renderTable = ({
                           <li>
                             <button
                               className={
-                                "btn btn-error " +
+                                "btn btn-error dropdown-content menu p-2 shadow text-white rounded-box " +
                                 (deleteUserMutation.isLoading &&
                                 deleteUserId == item.id
                                   ? "loading"

@@ -101,8 +101,7 @@ function TableRole() {
                     </button>
                     {num === 1 && (
                       <button
-                        className="btn btn-error dropdown-content menu p-2 shadow
-                         text-white rounded-box"
+                        className="btn btn-error dropdown-content menu p-2 shadow text-white rounded-box"
                         onClick={() => handleDelete(dt.id)}
                       >
                         Chắc chắn xóa!
