@@ -82,7 +82,7 @@ export default function User() {
     <>
       <button
         className={`btn btn-primary mb-4`}
-        onClick={() => router.push("/users")}
+        onClick={() => router.push("/members/users")}
       >
         Quay lại
       </button>

@@ -73,7 +73,7 @@ export default function App() {
   return (
     <>
       <div className="flex gap-2">
-        <Link href="/roles" className="btn mb-4">
+        <Link href="/members/roles" className="btn mb-4">
           Danh sách vai trò
         </Link>
       </div>
@@ -142,7 +142,7 @@ export default function App() {
             >
               Cập nhật
             </button>
-            <Link href={"/roles/" + parsedId} className="btn">
+            <Link href={"/members/roles/" + parsedId} className="btn">
               Trang xem vai trò
             </Link>
           </div>

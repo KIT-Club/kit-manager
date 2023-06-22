@@ -16,28 +16,28 @@ export default function Header() {
     },
     {
       name: "Người dùng",
-      href: "/users",
+      href: "/members/users",
       icon: SquaresPlusIcon,
     },
     {
       name: "Vai trò",
-      href: "/roles",
+      href: "/members/roles",
       icon: SquaresPlusIcon,
     },
     {
       name: "Sự kiện",
-      href: "/events",
+      href: "/members/events",
       icon: SquaresPlusIcon,
     },
     {
       name: "Ban",
-      href: "/committees",
+      href: "/members/committees",
       icon: SquaresPlusIcon,
     },
   ];
   const setToken = useUserStore((state: any) => state.setToken);
   const router = useRouter();
-  const loginPath = "/login";
+  const loginPath = "/members/login";
   const remove = (event: any) => {
     setToken(null);
     router.push(loginPath);

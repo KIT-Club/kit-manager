@@ -24,7 +24,7 @@ export default function Login() {
       setErr("");
       const res = await login(username, password);
       setToken(res.token);
-      router.push("/users");
+      router.push("/members/users");
     } catch (err: any) {
       setErr(err.response?.data?.error ?? "Có lỗi xảy ra");
     } finally {

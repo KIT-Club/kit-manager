@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import UserTable from "@/components/UserTable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { getEventById, updateEvent } from "@/repositories/Event.repository";
+import {
+  getCommitteeById,
+  updateCommittee,
+} from "@/repositories/Committee.repository";
 import Loading from "@/components/Loading";
 import ErrorAlert from "@/components/alert/Error";
 import Link from "next/link";
@@ -15,10 +18,10 @@ export default function App() {
   const parsedId = typeof id === "string" ? parseInt(id, 10) : undefined;
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["events", { id: parsedId }],
+    queryKey: ["committees", { id: parsedId }],
     queryFn: () =>
       parsedId
-        ? getEventById(parsedId ?? 0, {
+        ? getCommitteeById(parsedId ?? 0, {
             includes: "users",
           })
         : null,
@@ -26,40 +29,34 @@ export default function App() {
 
   const [updateData, setUpdateData] = useState({
     name: "",
-    description: "",
-    start_date: "",
-    end_date: "",
   });
 
-  const handleChangeData = (event: any) => {
+  const handleChangeData = (committee: any) => {
     setUpdateData({
       ...updateData,
-      [event.target.name]: event.target.value,
+      [committee.target.name]: committee.target.value,
     });
   };
 
   const updateUserMutation = useMutation({
     mutationFn: () =>
       parsedId
-        ? updateEvent({
+        ? updateCommittee({
             id: parsedId ?? 0,
             data: {
               ...data.data,
               ...updateData,
               user_ids: Object.keys(rowSelection),
-              end_date: updateData.end_date.length
-                ? updateData.end_date
-                : undefined,
             },
           })
         : Promise.reject(),
     onSuccess: (_data) => {
-      queryClient.invalidateQueries(["events"]);
+      queryClient.invalidateQueries(["committees"]);
     },
   });
 
-  const handleKeyPress = (event: any) => {
-    if (event.key === "Enter") {
+  const handleKeyPress = (committee: any) => {
+    if (committee.key === "Enter") {
       updateUserMutation.mutate();
     }
   };
@@ -67,9 +64,6 @@ export default function App() {
   useEffect(() => {
     setUpdateData({
       name: data?.data?.name ?? "",
-      description: data?.data?.description ?? "",
-      start_date: data?.data?.start_date ?? "",
-      end_date: data?.data?.end_date ?? "",
     });
     setRowSelection(
       data?.data?.users?.reduce((acc: any, item: any) => {
@@ -82,8 +76,8 @@ export default function App() {
   return (
     <>
       <div className="flex gap-2">
-        <Link href="/events" className="btn mb-4">
-          Danh sách sự kiện
+        <Link href="/members/committees" className="btn mb-4">
+          Danh sách ban
         </Link>
       </div>
       {isLoading ? (
@@ -98,7 +92,7 @@ export default function App() {
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-semibold text-lg">
-                  Tên sự kiện
+                  Tên ban
                   <span className="text-[red] ml-1">*</span>
                 </span>
               </label>
@@ -113,59 +107,7 @@ export default function App() {
                 disabled={updateUserMutation.isLoading}
               />
             </div>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-semibold text-lg">Mô tả</span>
-              </label>
-              <input
-                name="description"
-                type="text"
-                placeholder="Type here"
-                className="input input-bordered w-full"
-                value={updateData.description}
-                onChange={handleChangeData}
-                onKeyUp={handleKeyPress}
-                disabled={updateUserMutation.isLoading}
-              />
-            </div>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-semibold text-lg">
-                  Ngày bắt đầu
-                  <span className="text-[red] ml-1">*</span>
-                </span>
-              </label>
-              <input
-                name="start_date"
-                value={updateData.start_date}
-                onChange={handleChangeData}
-                onKeyUp={handleKeyPress}
-                disabled={updateUserMutation.isLoading}
-                className="input input-bordered cursor-text rounded-lg w-full"
-                type="date"
-              />
-            </div>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-semibold text-lg">
-                  Ngày kết thúc
-                </span>
-              </label>
-              <input
-                name="end_date"
-                value={updateData.end_date}
-                onChange={handleChangeData}
-                onKeyUp={handleKeyPress}
-                disabled={updateUserMutation.isLoading}
-                className="input input-bordered cursor-text rounded-lg w-full"
-                type="date"
-              />
-            </div>
           </div>
-          {/* Search user */}
 
           <label className="label">
             <span className="label-text font-semibold text-lg">
@@ -203,8 +145,8 @@ export default function App() {
             >
               Cập nhật
             </button>
-            <Link href={"/events/" + parsedId} className="btn">
-              Trang xem sự kiện
+            <Link href={"/members/committees/" + parsedId} className="btn">
+              Trang xem ban
             </Link>
           </div>
         </div>

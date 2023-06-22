@@ -67,7 +67,7 @@ const renderTable = ({
                   <th>
                     <div>
                       <Link
-                        href={`/users/${item.id}`}
+                        href={`/members/users/${item.id}`}
                         className="btn btn-sm bg-cyan-500 text-white mr-1"
                       >
                         Cập nhật

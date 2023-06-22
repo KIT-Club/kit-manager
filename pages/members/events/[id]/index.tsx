@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <>
-      <Link href="/events" className="btn mb-4">
+      <Link href="/members/events" className="btn mb-4">
         Danh sách sự kiện
       </Link>
       {isLoading ? (
@@ -115,7 +115,10 @@ export default function App() {
           <div className="mb-4"></div>
 
           <div className="flex gap-2">
-            <Link href={"/events/" + parsedId + "/update"} className="btn">
+            <Link
+              href={"/members/events/" + parsedId + "/update"}
+              className="btn"
+            >
               Cập nhật
             </Link>
           </div>

@@ -13,8 +13,8 @@ import { useRouter } from "next/router";
 export default function App({ Component, pageProps }: AppProps) {
   const token = useUserStore((state: any) => state.token);
   const pathName = usePathname();
-  const loginPath = "/login";
-  const homePath = "/";
+  const loginPath = "/members/login";
+  const homePath = "/members";
   const router = useRouter();
 
   // check token

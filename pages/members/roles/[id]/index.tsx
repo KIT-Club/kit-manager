@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import UserTable from "@/components/UserTable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import {
-  getCommitteeById,
-  updateCommittee,
-} from "@/repositories/Committee.repository";
+import { getRoleById, updateRole } from "@/repositories/Role.repository";
 import Loading from "@/components/Loading";
 import ErrorAlert from "@/components/alert/Error";
 import Link from "next/link";
@@ -18,10 +15,10 @@ export default function App() {
   const parsedId = typeof id === "string" ? parseInt(id, 10) : undefined;
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["committees", { id: parsedId }],
+    queryKey: ["roles", { id: parsedId }],
     queryFn: () =>
       parsedId
-        ? getCommitteeById(parsedId ?? 0, {
+        ? getRoleById(parsedId ?? 0, {
             includes: "users",
           })
         : null,
@@ -41,8 +38,8 @@ export default function App() {
 
   return (
     <>
-      <Link href="/committees" className="btn mb-4">
-        Danh sách các ban
+      <Link href="/members/roles" className="btn mb-4">
+        Danh sách các vai trò
       </Link>
       {isLoading ? (
         <Loading />
@@ -58,7 +55,7 @@ export default function App() {
           <table className="table w-full mb-4">
             <tbody>
               <tr>
-                <td>Tên ban</td>
+                <td>Tên vai trò</td>
                 <td>{updateData.name}</td>
               </tr>
             </tbody>
@@ -72,7 +69,7 @@ export default function App() {
 
           {updateData.users.length === 0 ? (
             <>
-              <p className="p-1">Chưa có ai trong ban này</p>
+              <p className="p-1">Chưa có ai trong vai trò này</p>
             </>
           ) : (
             <table className="table w-full">
@@ -98,7 +95,10 @@ export default function App() {
           <div className="mb-4"></div>
 
           <div className="flex gap-2">
-            <Link href={"/committees/" + parsedId + "/update"} className="btn">
+            <Link
+              href={"/members/roles/" + parsedId + "/update"}
+              className="btn"
+            >
               Cập nhật
             </Link>
           </div>

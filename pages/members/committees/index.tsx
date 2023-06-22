@@ -1,17 +1,20 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getAllEvents, deleteEvent } from "@/repositories/Event.repository";
+import {
+  getAllCommittees,
+  deleteCommittee,
+} from "@/repositories/Committee.repository";
 import Pagination from "@/components/Pagination";
 import ErrorAlert from "@/components/alert/Error";
-import CreatePopup from "@/components/events/CreatePopup";
+import CreatePopup from "@/components/committees/CreatePopup";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import Loading from "@/components/Loading";
 
 const renderTable = ({
-  deleteEventMutation,
-  deleteEventId,
+  deleteCommitteeMutation,
+  deleteCommitteeId,
   data,
-  handleDeleteEvent,
+  handleDeleteCommittee,
   onPageChange,
 }: any) => {
   return (
@@ -20,9 +23,7 @@ const renderTable = ({
         <table className="table w-full">
           <thead>
             <tr>
-              <th>Tên event</th>
-              <th>Ngày bắt đầu</th>
-              <th>Ngày kết thúc</th>
+              <th>Tên committee</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -32,21 +33,18 @@ const renderTable = ({
                 <tr key={item.id}>
                   <td>
                     <div className="msv">
-                      <Link href={`/events/${item.id}`} className="underline">
+                      <Link
+                        href={`/members/committees/${item.id}`}
+                        className="underline"
+                      >
                         {item.name}
                       </Link>
                     </div>
                   </td>
-                  <td>
-                    <div className="font-bold">{item.start_date}</div>
-                  </td>
-                  <td>
-                    <div className="class">{item.end_date}</div>
-                  </td>
                   <th>
                     <div>
                       <Link
-                        href={`/events/${item.id}/update`}
+                        href={`/members/committees/${item.id}/update`}
                         className="btn btn-sm bg-cyan-500 text-white mr-1"
                       >
                         Cập nhật
@@ -54,21 +52,21 @@ const renderTable = ({
                       <div className="dropdown">
                         <label
                           tabIndex={
-                            deleteEventMutation.isLoading &&
-                            deleteEventId == item.id
+                            deleteCommitteeMutation.isLoading &&
+                            deleteCommitteeId == item.id
                               ? undefined
                               : 0
                           }
                           className={
                             "btn btn-sm bg-error-500 text-white mr-1 " +
-                            (deleteEventMutation.isLoading &&
-                              deleteEventId == item.id &&
+                            (deleteCommitteeMutation.isLoading &&
+                              deleteCommitteeId == item.id &&
                               "loading")
                           }
                         >
                           {!(
-                            deleteEventMutation.isLoading &&
-                            deleteEventId == item.id
+                            deleteCommitteeMutation.isLoading &&
+                            deleteCommitteeId == item.id
                           ) && "Xóa"}
                         </label>
                         <ul
@@ -79,15 +77,15 @@ const renderTable = ({
                             <button
                               className={
                                 "btn btn-error dropdown-content menu p-2 shadow text-white rounded-box " +
-                                (deleteEventMutation.isLoading &&
-                                deleteEventId == item.id
+                                (deleteCommitteeMutation.isLoading &&
+                                deleteCommitteeId == item.id
                                   ? "loading"
                                   : "")
                               }
-                              onClick={() => handleDeleteEvent(item.id)}
+                              onClick={() => handleDeleteCommittee(item.id)}
                               disabled={
-                                deleteEventMutation.isLoading &&
-                                deleteEventId == item.id
+                                deleteCommitteeMutation.isLoading &&
+                                deleteCommitteeId == item.id
                               }
                             >
                               Chắc chắn xóa!
@@ -108,7 +106,7 @@ const renderTable = ({
   );
 };
 
-export default function Events() {
+export default function Committees() {
   const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,9 +116,9 @@ export default function Events() {
   };
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["events", currentPage],
+    queryKey: ["committees", currentPage],
     queryFn: () =>
-      getAllEvents({
+      getAllCommittees({
         page: currentPage,
         limit: currentLimit,
       }),
@@ -130,23 +128,23 @@ export default function Events() {
     refetch();
   }, [currentPage]);
 
-  // --- Delete event
-  const [deleteEventId, setDeleteEventId] = useState(0);
-  const deleteEventMutation = useMutation(deleteEvent, {
+  // --- Delete committee
+  const [deleteCommitteeId, setDeleteCommitteeId] = useState(0);
+  const deleteCommitteeMutation = useMutation(deleteCommittee, {
     onSuccess: () => {
-      deleteEventMutation.reset();
-      queryClient.invalidateQueries({ queryKey: ["events"] });
+      deleteCommitteeMutation.reset();
+      queryClient.invalidateQueries({ queryKey: ["committees"] });
     },
     onError: (err: any) => {
       alert(err?.message?.response?.data?.error ?? "Có lỗi xảy ra");
     },
     onSettled: (data: any, error: any, variables: any, context: any) => {
-      setDeleteEventId(0);
+      setDeleteCommitteeId(0);
     },
   });
-  const handleDeleteEvent = (id: number) => {
-    setDeleteEventId(id);
-    deleteEventMutation.mutate(id);
+  const handleDeleteCommittee = (id: number) => {
+    setDeleteCommitteeId(id);
+    deleteCommitteeMutation.mutate(id);
   };
   // ---
 
@@ -161,10 +159,10 @@ export default function Events() {
         />
       ) : (
         renderTable({
-          deleteEventMutation,
-          deleteEventId,
+          deleteCommitteeMutation,
+          deleteCommitteeId,
           data,
-          handleDeleteEvent,
+          handleDeleteCommittee,
           onPageChange,
         })
       )}

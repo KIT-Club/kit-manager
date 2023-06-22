@@ -80,14 +80,14 @@ function TableRole() {
           {pageData.data.map((dt: any, index: any) => (
             <tr key={index}>
               <td>
-                <Link href={"/roles/" + dt.id} className="underline">
+                <Link href={"/members/roles/" + dt.id} className="underline">
                   {dt.name}
                 </Link>
               </td>
               <td>
                 <div>
                   <Link
-                    href={`/roles/${dt.id}/update`}
+                    href={`/members/roles/${dt.id}/update`}
                     className="btn btn-sm bg-cyan-500 text-white mr-1"
                   >
                     Cập nhật
