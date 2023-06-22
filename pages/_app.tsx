@@ -9,11 +9,13 @@ import useUserStore from "@/stores/User.store";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import LoginCalendarLayout from "@/layouts/LoginCalendar";
 
 export default function App({ Component, pageProps }: AppProps) {
   const token = useUserStore((state: any) => state.token);
   const pathName = usePathname();
   const loginPath = "/members/login";
+  const loginCalendarPath = "/calendar/login";
   const homePath = "/members";
   const router = useRouter();
 
@@ -35,20 +37,29 @@ export default function App({ Component, pageProps }: AppProps) {
   });
 
   const Layout = (props: any) => {
-    return pathName === loginPath ? (
-      <LoginLayout>{props.children}</LoginLayout>
-    ) : (
-      <PageLayout>{props.children}</PageLayout>
-    );
+    switch (pathName) {
+      case loginPath:
+        return (
+          <QueryClientProvider client={queryClient}>
+            <LoginLayout {...props} />
+          </QueryClientProvider>
+        );
+      case loginCalendarPath:
+        return <LoginCalendarLayout {...props} />;
+      default:
+        return (
+          <QueryClientProvider client={queryClient}>
+            <PageLayout {...props} />
+          </QueryClientProvider>
+        );
+    }
   };
 
   return (
     <NoSSR>
-      <QueryClientProvider client={queryClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </QueryClientProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </NoSSR>
   );
 }
