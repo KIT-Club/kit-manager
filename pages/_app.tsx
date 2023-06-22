@@ -15,16 +15,19 @@ export default function App({ Component, pageProps }: AppProps) {
   const token = useUserStore((state: any) => state.token);
   const pathName = usePathname();
   const loginPath = "/members/login";
+  const calendarPath = "/calendar";
   const loginCalendarPath = "/calendar/login";
   const homePath = "/members";
   const router = useRouter();
 
   // check token
   useEffect(() => {
-    if (!token) {
-      if (pathName !== loginPath) router.push(loginPath);
-    } else {
-      if (pathName === loginPath) router.push(homePath);
+    if (!pathName?.startsWith("/calendar")) {
+      if (!token) {
+        if (pathName !== loginPath) router.push(loginPath);
+      } else {
+        if (pathName === loginPath) router.push(homePath);
+      }
     }
   }, []);
 
@@ -44,6 +47,8 @@ export default function App({ Component, pageProps }: AppProps) {
             <LoginLayout {...props} />
           </QueryClientProvider>
         );
+      case calendarPath:
+        return <PageLayout {...props} />;
       case loginCalendarPath:
         return <LoginCalendarLayout {...props} />;
       default:

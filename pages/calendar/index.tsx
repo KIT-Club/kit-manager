@@ -19,10 +19,6 @@ import {
 
 export default function CalendarIndex() {
   const calendarRef: RefObject<FullCalendar> = createRef();
-  const events = [
-    { title: "event 1", date: "2023-03-01 07:20" },
-    { title: "event 2", date: "2023-03-02 07:50" },
-  ];
 
   // const handleDateClick = (arg: any) => {
   //   // bind with an arrow function
@@ -152,7 +148,7 @@ export default function CalendarIndex() {
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        events={events}
+        events={calendar?.data_subject}
         //   dateClick={handleDateClick}
         //   eventContent={renderEventContent}
       />

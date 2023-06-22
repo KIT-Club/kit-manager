@@ -379,7 +379,62 @@ export function restructureTKB(data: any) {
       });
     }
   }
-  return { data_subject: days_outline };
+
+  // return { data_subject: days_outline };
+
+  // Đây là adapter cho format mới
+  const shiftTimetable = [
+    { start: "07:00", end: "07:45" },
+    { start: "07:50", end: "08:35" },
+    { start: "08:40", end: "09:25" },
+    { start: "09:35", end: "10:20" },
+    { start: "10:25", end: "11:10" },
+    { start: "11:15", end: "12:00" },
+    { start: "12:30", end: "13:15" },
+    { start: "13:20", end: "14:05" },
+    { start: "14:10", end: "14:55" },
+    { start: "15:05", end: "15:50" },
+    { start: "15:55", end: "16:40" },
+    { start: "16:45", end: "17:30" },
+    { start: "18:00", end: "18:45" },
+    { start: "18:45", end: "19:30" },
+    { start: "19:45", end: "20:30" },
+    { start: "20:30", end: "21:15" },
+  ];
+  const convertUnixTimestamp = (timestamp: any) => {
+    const date = new Date(timestamp); // Timestamp to milliseconds
+
+    const year = date.getFullYear();
+    const month = addLeadingZero(date.getMonth() + 1);
+    const day = addLeadingZero(date.getDate());
+    const hours = addLeadingZero(date.getHours());
+    const minutes = addLeadingZero(date.getMinutes());
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+
+  function addLeadingZero(value: any) {
+    return value < 10 ? `0${value}` : value;
+  }
+  const newFormatDataKit = [];
+  for (const week of days_outline) {
+    for (const day of week) {
+      for (const [indexShift, shift] of day.shift.entries()) {
+        if (shift.name) {
+          newFormatDataKit.push({
+            title: shift.name,
+            date:
+              convertUnixTimestamp(day.time) +
+              " " +
+              (shiftTimetable[indexShift] as any).start,
+          });
+        }
+      }
+    }
+  }
+
+  return { data_subject: newFormatDataKit };
 }
 
 export function exportToGoogleCalendar(student: string | null, calendar: any) {
