@@ -1,28 +1,12 @@
-## KIT Manager
+# KIT Manager
 
-### Getting Started
+## Instalation
 
-#### Requirement
-
-- Node.js
-- npm
-
-#### Core Libraries
-
-- Next.js
-- Zustand
-- React
-- TailwindCSS
-- daisyUI
-
-#### Prerequisites
-
-You can run this project by using the following commands:
+- Install dependencies: `npm i`
+- Run packages:
 
 ```bash
-cp .env.local.example .env
-# Install dependencies
-npm install
-# Run the app
-npm run dev
+npm run dev:member
+npm run dev:calendar
+npm run dev:tinchi
 ```
