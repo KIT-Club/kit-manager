@@ -220,7 +220,7 @@ function IndeterminateCheckbox({
 
   useEffect(() => {
     if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
+      ref.current.indeterminate = !rest?.checked && indeterminate;
     }
   }, [ref, indeterminate]);
 

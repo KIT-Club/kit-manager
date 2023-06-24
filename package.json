@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npx tailwindcss -i ./style.css -o ./assets/css/output.css --watch",
+    "dev:home": "npx tailwindcss -i ./style.css -o ./assets/css/output.css --watch",
     "dev:member": "cd packages/member && npm run dev",
     "dev:calendar": "cd packages/calendar && npm run dev",
     "dev:tinchi": "cd packages/tinchi && npm run dev",
-    "build": "bash cmds/build-home.sh",
+    "build:home": "bash cmds/build-home.sh",
     "build:member": "bash cmds/build-member.sh",
     "build:calendar": "bash cmds/build-calendar.sh",
     "build:tinchi": "bash cmds/build-tinchi.sh"
