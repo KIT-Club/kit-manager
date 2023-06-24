@@ -4,11 +4,11 @@
 
 <header class="mt-12 mb-4 text-center">
 	<h1 class="text-3xl">
-		<a href="/">ACTVN SCHEDULE</a>
+		<a href="/" class="uppercase">KIT Calendar</a>
 	</h1>
 	<p class="inline-flex gap-2 mt-2">
-		<a href="/changelogs" class="underline">CHANGELOGS</a> |
-		<a href="/about" class="underline">ABOUT</a> |
+		<!-- <a href="/changelogs" class="underline">CHANGELOGS</a> |
+		<a href="/about" class="underline">ABOUT</a> | -->
 		<a
 			href="https://www.facebook.com/kitclubKMA"
 			target="_blank"
@@ -22,7 +22,7 @@
 				alt="https://www.facebook.com/kitclubKMA"
 			/>
 		</a>
-		|
+		<!-- |
 		<a
 			href="https://github.com/ngosangns/kma-schedule-ngosangns/issues"
 			class="underline"
@@ -35,7 +35,7 @@
 				class="inline-block w-3 h-3 mb-4 invert"
 				alt="https://github.com/ngosangns/kma-schedule-ngosangns/issues"
 			/>
-		</a>
+		</a> -->
 	</p>
 </header>
 

@@ -8,12 +8,8 @@ import useUserStore from "@/stores/User.store";
 import { useRouter } from "next/router";
 
 export default function Header() {
+  const externalLinkIcon = "/member/external-link-icon.svg";
   const products = [
-    {
-      name: "Lịch",
-      href: "/calendar",
-      icon: SquaresPlusIcon,
-    },
     {
       name: "Người dùng",
       href: "/users",
@@ -49,9 +45,8 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between my-6"
         aria-label="Global"
       >
-        <div className="flex flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">KIT Manager</span>
+        <div className="flex flex-1 flex-row gap-4 items-center">
+          <Link href={window.location.origin} className="-m-1.5 p-1.5">
             <Image
               className="w-12 rounded-lg"
               src="/member/kit-logo.png"
@@ -59,12 +54,28 @@ export default function Header() {
               width={32}
               height={32}
             />
-          </a>
+          </Link>
+          <h1 className="text-lg uppercase">KIT Manager</h1>
+          <Link
+            href="https://www.facebook.com/kitclubKMA"
+            target="_blank"
+            rel="noreferrer"
+            className="text-lg flex flex-row gap-1 ml-4"
+          >
+            KIT CLUB
+            <Image
+              src={externalLinkIcon}
+              width={16}
+              height={16}
+              alt="https://www.facebook.com/kitclubKMA"
+              className="inline-block w-3 h-3 mb-4 invert"
+            />
+          </Link>
         </div>
         <Popover.Group className="flex gap-x-12">
           <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6">
-              Menu
+              <span className="text-lg font-normal uppercase">Menu</span>
               <ChevronDownIcon
                 className="h-5 w-5 flex-none"
                 aria-hidden="true"

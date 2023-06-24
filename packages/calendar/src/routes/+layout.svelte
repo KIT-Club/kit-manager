@@ -17,7 +17,7 @@
 	</main>
 
 	<footer class="text-center">
-		<span>KMA Schedule v2022.12 - ngosangns</span>
+		<span>&copy; 2023 - KIT Manager</span>
 	</footer>
 </div>
 
