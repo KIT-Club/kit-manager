@@ -50,7 +50,7 @@ export default function Header() {
         aria-label="Global"
       >
         <div className="flex flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">KIT Manager</span>
             <Image
               className="w-12 rounded-lg"
@@ -59,7 +59,7 @@ export default function Header() {
               width={32}
               height={32}
             />
-          </Link>
+          </a>
         </div>
         <Popover.Group className="flex gap-x-12">
           <Popover className="relative">
