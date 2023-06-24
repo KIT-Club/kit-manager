@@ -43,14 +43,18 @@ jobs:
         run: npm ci --force
 
       - name: Build code
-        run: npm run build && npm run export
+        run: /
+          npm run build:home
+          npm run build:member
+          npm run build:calendar
+          npm run build:tinchi
         env:
           NODE_ENV: production
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
           NEXT_PUBLIC_API_BASE_URL: ${{ secrets.API_BASE_URL }}
 
       - name: Zip code
-        run: cd out && zip -qr $ZIP_FILE . && mv $ZIP_FILE ~
+        run: cd output && zip -qr $ZIP_FILE . && mv $ZIP_FILE ~
 
       - name: Configure SSH
         run: |
@@ -80,7 +84,6 @@ jobs:
           ssh server <<END
           source .bashrc
           unzip -qo ~/$ZIP_FILE -d $TMP_PTP
-          mv $PTP/.htaccess $TMP_PTP/.htaccess
           rm -rf $PTP ~/$ZIP_FILE
           mv $TMP_PTP $PTP
           END
