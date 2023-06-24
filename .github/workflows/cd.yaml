@@ -43,7 +43,7 @@ jobs:
         run: npm ci --force
 
       - name: Build code
-        run: /
+        run: |
           npm run build:home
           npm run build:member
           npm run build:calendar
