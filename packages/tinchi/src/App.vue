@@ -176,7 +176,7 @@ const exportCalendar = () => {
       <span class="loading loading-dots loading-lg"></span>
     </div>
     <div v-else>
-      <div class="flex gap-2 mb-2 fixed bottom-0 z-10">
+      <div class="toolbar flex gap-2 mb-2 fixed bottom-0 z-10">
         <label class="btn bg-gray-700 text-gray-100 hover:bg-gray-900" for="my-modal-4">Chọn lớp</label>
         <button class="btn bg-gray-700 text-gray-100 hover:bg-gray-900" @click="exportCalendar">Xuất</button>
       </div>
@@ -435,14 +435,9 @@ const exportCalendar = () => {
   background-color: #ffffffbf;
 }
 
-.calendar-table {
-  /* overflow-y: overlay;
-  max-height: 31rem; */
-}
-
 @media print {
-  .calendar-table {
-    max-height: auto !important;
+  .toolbar {
+    display: none;
   }
 }
 </style>
