@@ -1,8 +1,13 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import UserTable from "@/components/UserTable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { getRoleById, updateRole } from "@/repositories/Role.repository";
+import {
+  getRoleById,
+  updateRole,
+  getPermissionList,
+} from "@/repositories/Role.repository";
 import Loading from "@/components/Loading";
 import ErrorAlert from "@/components/alert/Error";
 import Link from "next/link";
@@ -14,6 +19,7 @@ export default function App() {
   const { id } = router.query;
   const parsedId = typeof id === "string" ? parseInt(id, 10) : undefined;
 
+  // role info
   const { isLoading, error, data } = useQuery({
     queryKey: ["roles", { id: parsedId }],
     queryFn: () =>
@@ -23,11 +29,9 @@ export default function App() {
           })
         : null,
   });
-
   const [updateData, setUpdateData] = useState({
     name: "",
   });
-
   const handleChangeData = (role: any) => {
     setUpdateData({
       ...updateData,
@@ -35,6 +39,24 @@ export default function App() {
     });
   };
 
+  // permission list
+  const {
+    isLoading: isLoadingPl,
+    error: errorPl,
+    data: dataPl,
+  } = useQuery({
+    queryKey: ["permission-list"],
+    queryFn: () => getPermissionList(),
+  });
+  const [updateDataPl, setUpdateDataPl] = useState({});
+  const handleChangeDataPl = (role: any) => {
+    setUpdateDataPl({
+      ...updateDataPl,
+      [role.target.name]: role.target.checked,
+    });
+  };
+
+  // update role
   const updateUserMutation = useMutation({
     mutationFn: () =>
       parsedId
@@ -43,6 +65,7 @@ export default function App() {
             data: {
               ...data.data,
               ...updateData,
+              permissions: updateDataPl,
               user_ids: Object.keys(rowSelection),
             },
           })
@@ -62,6 +85,9 @@ export default function App() {
     setUpdateData({
       name: data?.data?.name ?? "",
     });
+
+    if (data?.data?.permissions) setUpdateDataPl(data.data.permissions);
+
     setRowSelection(
       data?.data?.users?.reduce((acc: any, item: any) => {
         acc[item.id] = true;
@@ -77,12 +103,18 @@ export default function App() {
           Danh sách vai trò
         </Link>
       </div>
-      {isLoading ? (
+      {isLoading || isLoadingPl ? (
         <Loading />
-      ) : error ? (
-        <ErrorAlert
-          msg={(error as any).response?.data?.error ?? "Có lỗi xảy ra"}
-        />
+      ) : error || errorPl ? (
+        error ? (
+          <ErrorAlert
+            msg={(error as any).response?.data?.error ?? "Có lỗi xảy ra"}
+          />
+        ) : (
+          <ErrorAlert
+            msg={(errorPl as any).response?.data?.error ?? "Có lỗi xảy ra"}
+          />
+        )
       ) : !data?.data ? null : (
         <div className="block my-0 p-5 bg-base-100 rounded-xl">
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 mb-4">
@@ -105,6 +137,39 @@ export default function App() {
               />
             </div>
           </div>
+
+          {!data?.data?.is_admin && (
+            <>
+              <label className="label">
+                <span className="label-text font-semibold text-lg">Quyền</span>
+              </label>
+
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4">
+                {dataPl?.data?.map((item: any) => (
+                  <label
+                    key={item}
+                    className="label cursor-pointer justify-start"
+                  >
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      id={"role_" + item}
+                      checked={updateDataPl?.[item] ?? false}
+                      name={item}
+                      onChange={handleChangeDataPl}
+                      disabled={updateUserMutation.isLoading}
+                    />
+                    <label
+                      htmlFor={"role_" + item}
+                      className="label-text inline-block pl-2"
+                    >
+                      {item}
+                    </label>
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
 
           <label className="label">
             <span className="label-text font-semibold text-lg">

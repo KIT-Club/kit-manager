@@ -24,3 +24,8 @@ export const deleteRole = async (id: number) => {
   const response = await api.delete(`/roles/${id}`);
   return response.data;
 };
+
+export const getPermissionList = async (params: any) => {
+  const response = await api.get("/permission-list", params);
+  return response.data;
+};

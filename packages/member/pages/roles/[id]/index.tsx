@@ -1,8 +1,13 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import UserTable from "@/components/UserTable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { getRoleById, updateRole } from "@/repositories/Role.repository";
+import {
+  getRoleById,
+  updateRole,
+  getPermissionList,
+} from "@/repositories/Role.repository";
 import Loading from "@/components/Loading";
 import ErrorAlert from "@/components/alert/Error";
 import Link from "next/link";
@@ -13,7 +18,6 @@ export default function App() {
   const queryClient = useQueryClient();
   const { id } = router.query;
   const parsedId = typeof id === "string" ? parseInt(id, 10) : undefined;
-
   const { isLoading, error, data } = useQuery({
     queryKey: ["roles", { id: parsedId }],
     queryFn: () =>
@@ -23,7 +27,6 @@ export default function App() {
           })
         : null,
   });
-
   const [updateData, setUpdateData] = useState({
     name: "",
     users: [],

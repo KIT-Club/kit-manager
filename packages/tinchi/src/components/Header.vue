@@ -18,6 +18,12 @@ import externalLinkIcon from '../assets/external-link-icon.svg';
                 <img :src="externalLinkIcon" class="inline-block w-3 h-3 mb-4" alt="https://www.facebook.com/kitclubKMA" />
             </a> -->
         </p>
+        <p class="mt-2 m-0 p-0">
+            Trang web chỉ hỗ trợ xếp lịch, không hỗ trợ đăng ký môn học trên web của trường.
+        </p>
+        <p class="mt-2 m-0 p-0">
+            Sử dụng trình duyệt trên PC/Laptop để có trải nghiệm tốt nhất!
+        </p>
     </header>
 </template>
 

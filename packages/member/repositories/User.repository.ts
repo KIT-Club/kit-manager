@@ -8,6 +8,11 @@ export const login = async (username: string, password: string) => {
   return response.data;
 };
 
+export const profile = async (params: any) => {
+  const response = await api.get(`/profile`, { params });
+  return response.data;
+};
+
 export const addUser = async ({
   username,
   committee_ids,

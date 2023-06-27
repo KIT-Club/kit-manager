@@ -198,13 +198,7 @@ const exportCalendar = () => {
               <p class="mb-2">Học kỳ: <b>
                   <h3 class="inline">{{ data?.title }}</h3>
                 </b></p>
-              <p>Lưu ý:</p>
-              <ul class="list-disc ml-4 mb-2" style="padding-left: .125rem">
-                <li>Trang web chỉ hỗ trợ xếp lịch, không hỗ trợ đăng ký môn học trên web của trường.</li>
-                <li>
-                  Các môn có tiết thực hành (có đuôi chấm theo sau) đã được thêm tiết lý thuyết vào.
-                </li>
-              </ul>
+              <p>Lưu ý: Các môn có tiết thực hành (có đuôi chấm theo sau) đã được thêm tiết lý thuyết vào.</p>
               <p>Hướng dẫn:</p>
               <ul class="list-disc ml-4 mb-2" style="padding-left: .125rem">
                 <li>
@@ -436,6 +430,11 @@ const exportCalendar = () => {
 }
 
 @media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   .toolbar {
     display: none;
   }
