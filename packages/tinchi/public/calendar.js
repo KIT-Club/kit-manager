@@ -45,7 +45,7 @@ const workerGetSessionContent = (selectedCalendar, date, session) => {
                     continue;
             }
             // add detail to result
-            result.push(currentSubjectClassDetail);
+            result.push({ ...currentSubjectClassDetail, subjectId: currentSubject.class.subjectId });
             break;
         }
     }
