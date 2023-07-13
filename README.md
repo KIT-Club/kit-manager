@@ -1,5 +1,7 @@
 # KIT Manager
 
+Production environment: [https://kit.id.vn](https://kit.id.vn)
+
 ## Instalation
 
 - Install dependencies: `npm i`
